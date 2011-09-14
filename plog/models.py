@@ -76,3 +76,7 @@ class User(db.Document):
     last_name = db.StringField()
     email = db.StringField()
 
+    meta = {
+        'allow_inheritance': False,
+    }
+
