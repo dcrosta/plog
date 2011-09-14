@@ -58,4 +58,3 @@ app.session_store = MongoSessionStore(db)
 import plog.filters
 import plog.views
 
-import pprint

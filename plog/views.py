@@ -205,6 +205,5 @@ def slug_for(title=None, pubdate=None):
     title = unicode(re.sub('[^\w\s-]', '', title).strip().lower())
     title = re.sub('[\s]+', '-', title)
 
-    print "returning", repr('%4d/%02d/%02d/%s' % (pubdate.year, pubdate.month, pubdate.day, title))
     return '%4d/%02d/%02d/%s' % (pubdate.year, pubdate.month, pubdate.day, title)
 
