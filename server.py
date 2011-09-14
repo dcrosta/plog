@@ -7,4 +7,6 @@ if __name__ == '__main__':
     except:
         port = 8080
     app.run(port=port)
+else:
+    application = app.wsgi_app
 
