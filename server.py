@@ -8,5 +8,5 @@ if __name__ == '__main__':
         port = 8080
     app.run(port=port)
 else:
-    application = app.wsgi_app
+    application = app
 
