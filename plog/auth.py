@@ -1,9 +1,9 @@
 __all__ = ('login_required', 'LoginForm')
 
+from bcrypt import gensalt, hashpw
 from functools import wraps
 from urllib import urlencode, quote
 
-from bcrypt import gensalt, hashpw
 from flask import redirect, request, session, url_for
 from wtforms import Form, TextField, PasswordField
 from wtforms.validators import Required
@@ -30,18 +30,16 @@ def authenticate(username, password):
     return None
 
 def create_user(username, password, **kwargs):
-    hashed_pw = hashpw(password, gensalt(app.config.get('BCRYPT_LOG_ROUNDS', 14)))
     user = User(
         username=username,
-        password=hashed_pw,
         **kwargs)
+    user.set_password(password)
     try:
         user.save()
+        return user
     except:
         # probably duplicate username
-        return False
-    else:
-        return True
+        return None
 
 class LoginForm(Form):
     username = TextField(

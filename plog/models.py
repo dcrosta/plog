@@ -1,12 +1,13 @@
 __all__ = ('Comment', 'Post', 'PostForm', 'User')
 
+from bcrypt import gensalt, hashpw
 from datetime import date, datetime
 import re
 
 from wtforms import Form, BooleanField, DateField, TextField, TextAreaField
 from wtforms.validators import Required
 
-from plog import db
+from plog import app, db
 
 
 boundary = re.compile(r'\s')
@@ -69,12 +70,14 @@ class PostForm(Form):
 
 class User(db.Document):
     username = db.StringField(required=True, unique=True)
-    # bcrypted, of course
     password = db.StringField(required=True)
 
     first_name = db.StringField()
     last_name = db.StringField()
     email = db.StringField()
+
+    def set_password(self, raw_password):
+        self.password = hashpw(password, gensalt(app.config.get('BCRYPT_LOG_ROUNDS', 14)))
 
     meta = {
         'allow_inheritance': False,
