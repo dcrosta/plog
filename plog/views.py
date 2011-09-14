@@ -24,9 +24,9 @@ def index():
 def feed():
     feed = pyatom.AtomFeed(
         title='late.am',
-        feed_url=url_for('feed'),
+        feed_url=url_for('feed', _external=True),
         author={'name': 'Dan Crosta', 'email': 'dcrosta@late.am'},
-        icon=url_for('static', filename='mug.png'),
+        icon=url_for('static', filename='mug.png', _external=True),
         generator=('plog', 'https://github.com/dcrosta/plog', '0.1'),
     )
 
@@ -37,7 +37,7 @@ def feed():
             content=markdown(post.blurb + '\n' + post.body),
             content_type='html',
             author={'name': 'Dan Crosta', 'email': 'dcrosta@late.am'},
-            url=url_for('post', slug=post.slug),
+            url=url_for('post', slug=post.slug, _external=True),
             updated=post.pubdate)
 
     response = make_response(unicode(feed))
