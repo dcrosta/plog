@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{% block title %}late.am{% endblock %}</title>
+    {% if keywords %}
+    <meta name="keywords" content="{{keywords|join(',')}}"/>
+    {% endif %}
+    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}"/>
+    <link rel="alternate" type="application/atom+xml" href="{{url_for('feed')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='reset.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='plog.css')}}"/>
+    {% block styles %}{% endblock %}
+  </head>
+  <body>
+
+    <div id="wrapper-1"></div>
+    <div id="wrapper-2"></div>
+
+    <div id="wrapper">
+      <header id="header">
+        <h1><a href="/" title="Home" rel="prefetch">late<img src="{{url_for('static', filename='mug.png')}}" width="16" height="16"/>am</a></h1>
+      </header>
+
+      <section id="main">
+        <section id="articles">
+          {% block content %}{% endblock %}
+        </section>
+
+        {% if archive %}
+        <section id="after-articles">
+          <p><a href="{{url_for('full_archive')}}">Archive</a></p>
+        </section>
+        {% endif %}
+      </section>
+
+      <aside id="sidebar">
+        {% block sidebar %}
+        <section>
+          <h1>by Dan Crosta</h1>
+          I build web applications using <a href="http://www.mongodb.org/">MongoDB</a> and
+          <a href="http://www.python.org/">Python</a> as a Software Engineer at
+          <a href="http://www.10gen.com/">10gen</a>.
+        </section>
+        <section>
+          <h1>Find me online:</h1>
+          <ul>
+            <li><a href="https://twitter.com/#!/lazlofruvous">Twitter</a></li>
+            <li><a href="https://github.com/dcrosta">GitHub</a></li>
+            <li><a href="http://stackoverflow.com/users/124745/dcrosta">Stack Overflow</a></li>
+          </ul>
+        </section>
+
+        <section id="search" class="boxed">
+          <form action="{{url_for('search')}}" method="get">
+            <input id="search-input" type="text" name="q" value=""/>
+            <button id="search-button" type="submit">Search</button>
+          </form>
+        </section>
+        {% endblock %}
+      </aside>
+    </div>
+
+    <footer>
+      <p>
+      Designed based on the <a href="http://www.tumblr.com/theme/3292">Stationary</a> <a href="http://tumblr.com">Tumblr</a> theme, by <a href="http://www.tumblr.com/themes/by/thijsjacobs">thijsjacobs</a>
+      &middot; <a rel="alternate" type="application/atom+xml" href="{{url_for('feed')}}">Atom Feed</a>
+      </p>
+    </footer>
+
+    <script type="text/javascript" src="{{url_for('static', filename='jquery-1.6.3.min.js')}}"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#wrapper-1,#wrapper-2").css("height",$("#wrapper").innerHeight());
+      });
+    </script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

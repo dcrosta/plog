@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+{% include "_admin-nav.html" %}
+{% endblock %}
+
+
+{% block content %}
+    {% with submitlabel="Save", formid="editpost" %}
+    {% include "_form.html" with context %}
+    {% endwith %}
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{url_for('static', filename='jquery-ui.css')}}"/>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{url_for('static', filename='jquery-ui.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='dateformat.js')}}"></script>
+    <script type="text/javascript">
+      var timer = null;
+      var slugurl = "{{url_for('slug_for')}}";
+      function updateslug() {
+        if (timer != null)
+          clearTimeout(timer);
+        var title = $('#title').val();
+        var pubdate = $('#pubdate').val();
+        var url = slugurl + '?title='
+                + encodeURIComponent(title) + '&pubdate='
+                + encodeURIComponent(pubdate);
+        timer = setTimeout(function() {
+          jQuery.get(url, function(data) {
+            if (data != "")
+              $('#slug').val(data);
+          });
+        }, 500);
+      }
+
+      $(document).ready(function() {
+        $('#slug').attr('editable', 'false');
+        $('#pubdate').datepicker({dateFormat: "yy-mm-dd"});
+        if ($('#pubdate').val() == "") {
+          $('#pubdate').val(new Date().format("yyyy-mm-dd"));
+        }
+
+        $('#pubdate').change(updateslug);
+        $('#title').keyup(updateslug);
+      });
+    </script>
+{% endblock %}

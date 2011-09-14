@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% import "_macros.html" as macros with context %}
+
+{% block content %}
+    {% for post in posts %}
+    {{macros.article(post, short=True)}}
+    {% endfor %}
+{% endblock %}

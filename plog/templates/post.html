@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% import "_macros.html" as macros with context %}
+
+{% block title %}{{post.title}} &laquo; {{super()}}{% endblock %}
+
+{% block content %}
+    {{macros.article(post)}}
+{% endblock %}

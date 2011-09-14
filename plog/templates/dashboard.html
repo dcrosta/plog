@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% import "_macros.html" as macros with context %}
+
+{% block sidebar %}
+{% include "_admin-nav.html" %}
+{% endblock %}
+
+{% block content %}
+    <h1>Posts</h1>
+    <table class="dashboard articles">
+      <thead>
+        <tr>
+          <th>Published</th>
+          <th>Title</th>
+          <th>Views</th>
+          <th>Comments</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+        <tr>
+          <td>
+            <input type="checkbox" disabled="disabled"{% if post.published %} checked="checked"{% endif %}/>
+            <a href="{{url_for('edit_post', slug=post.slug)}}">{{post.pubdate.strftime('%Y-%m-%d')}}</a>
+          </td>
+          <td><a href="{{url_for('edit_post', slug=post.slug)}}">{{post.title}}</a></td>
+          <td><a href="{{url_for('edit_post', slug=post.slug)}}"></a></td>
+          <td><a href="{{url_for('edit_post', slug=post.slug)}}"></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h1>Moderation Queue</h1>
+    <table class="dashboard comments">
+      <thead>
+        <tr>
+          <th>On Post</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for comment in comments %}
+        <tr>
+          <td><a href="{{url_for('edit_post', slug=comment.post.slug)}}">{{comment.post.title}}</a></td>
+          <td>{{comment.author.full_name}}</td>
+          <td>{{comment.author.email}}</td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            {{comment.body|escape}}
+          </td>
+        </tr>
+        <tr class="noborder">
+          <td><button id="{{comment.id}}" class="approve">Approve</button></td>
+          <td class="ajax"></td>
+          <td><button id="{{comment.id}}" class="reject">Reject</button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% with submitlabel="Log In", formid="login" %}
+    {% include "_form.html" with context %}
+    {% endwith %}
+{% endblock %}
