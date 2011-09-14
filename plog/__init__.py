@@ -9,9 +9,6 @@ from flaskext.mongoengine import MongoEngine, MongoSessionStore
 here = dirname(__file__)
 parent = abspath(join(dirname(__file__), '..'))
 
-config = join(parent, 'plog.cfg')
-private = join(parent, 'private.plog.cfg')
-
 class SessionMixin(object):
     __slots__ = ('session_store',)
 
@@ -47,8 +44,11 @@ class SessionFlask(SessionMixin, Flask):
 
 app = SessionFlask('plog')
 
+config = join(parent, 'plog.cfg')
 if exists(config):
     app.config.from_pyfile(config)
+
+private = join(parent, 'private.plog.cfg')
 if exists(private):
     app.config.from_pyfile(private)
 
