@@ -135,7 +135,6 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/admin/login', methods=['POST'])
-#@check_csrf
 def do_login():
     form = LoginForm(request.form)
     if not form.validate():
@@ -145,6 +144,7 @@ def do_login():
         )
 
     session['authenticated'] = True
+    session['user_id'] = form.user.pk
     return redirect(request.args.get('next', url_for('dashboard')))
 
 
