@@ -16,6 +16,11 @@ def nozero(value, strip=False):
       return nozero_re.sub(r'\1', value)
     return nozero_re.sub(r' \1', value)
 
+@app.template_filter('nonone')
+def no_none(value, default=''):
+    if value is None:
+        return default
+    return value
 
 @app.template_filter('pygments')
 def pygments(value):

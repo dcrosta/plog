@@ -31,6 +31,9 @@ class Post(db.Document):
 
     comments = db.ListField(db.EmbeddedDocumentField(Comment))
 
+    # analytics
+    views = db.IntField()
+
     # for search
     _words = db.ListField(db.StringField())
 

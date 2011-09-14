@@ -1,4 +1,4 @@
-__all__ = ('login_required', 'LoginForm')
+__all__ = ('is_logged_in', 'login_required', 'LoginForm')
 
 from bcrypt import gensalt, hashpw
 from functools import wraps
@@ -11,10 +11,13 @@ from wtforms.validators import Required
 from plog import app
 from plog.models import User
 
+def is_logged_in():
+    return session.get('authenticated', False)
+
 def login_required(func):
     @wraps(func)
     def checkauth(*args, **kwargs):
-        if session.get('authenticated', False):
+        if is_logged_in():
             return func(*args, **kwargs)
         else:
             url = quote(request.script_root + request.path)

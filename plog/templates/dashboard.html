@@ -25,7 +25,7 @@
             <a href="{{url_for('edit_post', slug=post.slug)}}">{{post.pubdate.strftime('%Y-%m-%d')}}</a>
           </td>
           <td><a href="{{url_for('edit_post', slug=post.slug)}}">{{post.title}}</a></td>
-          <td><a href="{{url_for('edit_post', slug=post.slug)}}"></a></td>
+          <td><a href="{{url_for('edit_post', slug=post.slug)}}">{{post.views|nonone}}</a></td>
           <td><a href="{{url_for('edit_post', slug=post.slug)}}"></a></td>
         </tr>
         {% endfor %}

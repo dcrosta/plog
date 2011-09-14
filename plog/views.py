@@ -117,6 +117,8 @@ def day_archive(year, month, day):
 @app.route('/post/<path:slug>')
 def post(slug):
     post = Post.objects.get_or_404(slug=slug, published=True)
+    if not is_logged_in():
+        post.update(inc__views=1)
     return render_template(
         'post.html',
         post=post,
