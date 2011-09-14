@@ -1,12 +1,14 @@
 import re
 from datetime import datetime, timedelta
 import unicodedata
+import pyatom
 
-from flask import redirect, render_template, request, session, url_for
+from flask import make_response, redirect, render_template, request, session, url_for
 
 from plog import app
 from plog.models import *
 from plog.auth import *
+from plog.filters import markdown
 
 @app.route('/')
 def index():
@@ -20,7 +22,27 @@ def index():
 
 @app.route('/feed')
 def feed():
-    return 'feed'
+    feed = pyatom.AtomFeed(
+        title='late.am',
+        feed_url=url_for('feed'),
+        author={'name': 'Dan Crosta', 'email': 'dcrosta@late.am'},
+        icon=url_for('static', filename='mug.png'),
+        generator=('plog', 'https://github.com/dcrosta/plog', '0.1'),
+    )
+
+    posts = Post.objects(published=True).order_by('-pubdate')
+    for post in posts[:20]:
+        feed.add(
+            title=post.title,
+            content=markdown(post.blurb + '\n' + post.body),
+            content_type='html',
+            author={'name': 'Dan Crosta', 'email': 'dcrosta@late.am'},
+            url=url_for('post', slug=post.slug),
+            updated=post.pubdate)
+
+    response = make_response(unicode(feed))
+    response.headers['Content-Type'] = 'application/atom+xml; charset=UTF-8'
+    return response
 
 @app.route('/search')
 def search():
