@@ -60,7 +60,6 @@ class TagCloud(db.Document):
         for t in tags:
             t.bucket = sizes -  int(round(scale * (t.count - least) / range))
 
-        print [(t.tag, t.bucket) for t in tags]
         return tags
 
 
