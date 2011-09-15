@@ -3,11 +3,14 @@
 {% import "_macros.html" as macros with context %}
 
 {% block content %}
+    {% if start %}
+    <h1>{{start.strftime(fmt)}}</h1>
+    {% endif %}
     <div id="archive">
       {% for post in posts %}
       {{macros.archive_article(post)}}
       {% else %}
-      <h1 class="noarchive">No posts to show.</h1>
+      <p><em>No posts to show.</em></p>
       {% endfor %}
     </div>
 {% endblock %}

@@ -274,10 +274,14 @@ ol {
 
 
   #archive {
-    font-size:85%;
+    margin-top:2em;
 
-    h1.noarchive {
-      font-style:italic;
+    h1 {
+      @include header(0.90);
+
+      time {
+        font-size:80%;
+      }
     }
 
     article {

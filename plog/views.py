@@ -67,25 +67,13 @@ def search():
 
 @app.route('/post/')
 def full_archive():
-    posts = Post.objects(published=True).order_by('-pubdate')
-    posts.only('pubdate', 'slug', 'title')
-    return render_template(
-        'archive.html',
-        posts=posts
-    )
-
+    return archive(None, None)
 
 @app.route('/post/<int:year>/')
 def year_archive(year):
     start = datetime(year=year, month=1, day=1)
     end = datetime(year=year + 1, month=1, day=1)
-    posts = Post.objects(published=True).order_by('-pubdate')
-    posts = posts.filter(pubdate__gte=start, pubdate__lt=end)
-    posts.only('pubdate', 'slug', 'title')
-    return render_template(
-        'archive.html',
-        posts=posts,
-    )
+    return archive(start, end, 'Posts from %Y')
 
 @app.route('/post/<int:year>/<int:month>/')
 def month_archive(year, month):
@@ -94,24 +82,24 @@ def month_archive(year, month):
         year += 1
         month = 0
     end = datetime(year=year, month=month + 1, day=1)
-    posts = Post.objects(published=True).order_by('-pubdate')
-    posts = posts.filter(pubdate__gte=start, pubdate__lt=end)
-    posts.only('pubdate', 'slug', 'title')
-    return render_template(
-        'archive.html',
-        posts=posts,
-    )
+    return archive(start, end, 'Posts from %B %Y')
 
 @app.route('/post/<int:year>/<int:month>/<int:day>/')
 def day_archive(year, month, day):
     start = datetime(year=year, month=month, day=day)
     end = start + timedelta(days=1)
+    return archive(start, end, 'Posts from %B %d, %Y')
+
+def archive(start, end, fmt):
     posts = Post.objects(published=True).order_by('-pubdate')
-    posts = posts.filter(pubdate__gte=start, pubdate__lt=end)
+    if start and end:
+        posts.filter(pubdate__gte=start, pubdate__lt=end)
     posts.only('pubdate', 'slug', 'title')
     return render_template(
         'archive.html',
         posts=posts,
+        start=start,
+        fmt=fmt,
     )
 
 @app.route('/post/<path:slug>')
