@@ -106,7 +106,7 @@ def archive(start, end, fmt):
         fmt=fmt,
     )
 
-@app.route('/post/<tag>')
+@app.route('/tag/<tag>')
 def tag_archive(tag):
     posts = Post.objects(published=True, tags=tag).order_by('-pubdate')
     posts.only('pubdate', 'slug', 'title')
