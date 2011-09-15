@@ -50,6 +50,9 @@ class TagCloud(db.Document):
     @staticmethod
     def get(sizes=6):
         tags = [t for t in TagCloud.objects.order_by('tag')]
+        if tags == []:
+            return tags
+
         least = min(t.count for t in tags)
         most = max(t.count for t in tags)
         range = most - least
