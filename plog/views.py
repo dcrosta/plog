@@ -39,6 +39,7 @@ def feed():
             content_type='html',
             author={'name': 'Dan Crosta', 'email': 'dcrosta@late.am'},
             url=url_for('post', slug=post.slug, _external=True),
+            id=url_for('permalink', post_id=post.pk, _external=True),
             updated=post.pubdate)
 
     response = make_response(unicode(feed))
@@ -115,6 +116,11 @@ def tag_archive(tag):
         cloud=TagCloud.get(),
         tag=tag,
     )
+
+@app.route('/post/id/<post_id>')
+def permalink(post_id):
+    post = Post.objects.get_or_404(pk=post_id)
+    return redirect(url_for('post', slug=post.slug))
 
 @app.route('/post/<path:slug>')
 def post(slug):
