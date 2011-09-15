@@ -4,7 +4,9 @@ import re
 from plog import app
 
 from markdown2 import markdown
-app.jinja_env.filters['markdown'] = markdown
+@app.template_filter('markdown')
+def domarkdown(value):
+    return markdown(value, extras=['code-color'])
 
 nozero_re = re.compile(r'(?:^|\s)0(\d)')
 @app.template_filter('nozero')
