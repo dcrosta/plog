@@ -40,8 +40,10 @@
       $(document).ready(function() {
         $('#slug').attr('editable', 'false');
         $('#pubdate').datepicker({dateFormat: "yy-mm-dd"});
-        // grr, different formats in different libraries
-        $('#pubdate').val(new Date().format("yyyy-mm-dd"));
+        if ($('#pubdate').val() == "") {
+          // grr, different formats in different libraries
+          $('#pubdate').val(new Date().format("yyyy-mm-dd"));
+        }
 
         $('#pubdate').change(updateslug);
         $('#title').keyup(updateslug);

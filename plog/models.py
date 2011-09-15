@@ -69,6 +69,7 @@ class Comment(db.EmbeddedDocument):
 
 class Post(db.Document):
     pubdate = db.DateTimeField(required=True)
+    updated = db.DateTimeField()
     published = db.BooleanField(default=True)
 
     title = db.StringField(required=True)
@@ -112,6 +113,8 @@ class Post(db.Document):
                 self.pubdate.day)
 
         super(Post, self).save()
+
+        self.updated = datetime.utcnow()
 
         # additionally, update the tag cloud
         # map-reduce
