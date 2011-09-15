@@ -224,6 +224,8 @@ ol {
     h4 { @include header(0.73); display:inline-block; margin:0px 5px; }
     h5 { @include header(0.65); display:inline-block; margin:0px 5px; }
     h6 { @include header(0.58); display:inline-block; margin:0px 5px; }
+
+    h1:first-child{ display:block; @include header(1.00); }
   }
 }
 
@@ -256,6 +258,16 @@ ol {
         font-size:60%;
         a { color:#777; }
         a:focus, a:hover { color:#323130; }
+      }
+    }
+
+    .tags {
+      img {
+        position:relative;
+        top:6px;
+      }
+      .untagged {
+        color:#777;
       }
     }
 

@@ -59,6 +59,7 @@
 
         {% if cloud %}
         <section id="tagcloud">
+          <h1>Read About:</h1>
           {% for tag in cloud %}
           <h{{tag.bucket}}><a href="{{url_for('tag_archive', tag=tag.tag)}}">{{tag.tag}}</a></h{{tag.bucket}}>
           {% endfor %}

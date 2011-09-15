@@ -96,7 +96,7 @@ def archive(start, end, fmt):
     posts = Post.objects(published=True).order_by('-pubdate')
     if start and end:
         posts.filter(pubdate__gte=start, pubdate__lt=end)
-    posts.only('pubdate', 'slug', 'title')
+    posts.only('pubdate', 'slug', 'title', 'tags')
     return render_template(
         'archive.html',
         posts=posts,
@@ -124,6 +124,7 @@ def post(slug):
     return render_template(
         'post.html',
         post=post,
+        cloud=TagCloud.get(),
     )
 
 @app.route('/admin/login', methods=['GET'])

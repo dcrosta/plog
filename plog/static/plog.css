@@ -269,6 +269,13 @@ ol {
     margin: 11.6px 0px 6.96px 0px;
     display: inline-block;
     margin: 0px 5px; }
+  #sidebar #tagcloud h1:first-child {
+    display: block;
+    font-family: "Istok Web", sans-serif;
+    font-weight: normal;
+    font-size: 26px;
+    line-height: 30px;
+    margin: 20px 0px 12px 0px; }
 
 #main {
   float: left;
@@ -295,6 +302,11 @@ ol {
         color: #777; }
       #articles article header time a:focus, #articles article header time a:hover {
         color: #323130; }
+  #articles article .tags img {
+    position: relative;
+    top: 6px; }
+  #articles article .tags .untagged {
+    color: #777; }
   #articles article blockquote {
     font: italic 1.1em/1.3em "Istok Web", sans-serif;
     margin-bottom: 15px;
