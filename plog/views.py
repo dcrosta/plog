@@ -40,9 +40,8 @@ def feed():
             author={'name': 'Dan Crosta', 'email': 'dcrosta@late.am'},
             url=url_for('post', slug=post.slug, _external=True),
             id=url_for('permalink', post_id=post.pk, _external=True),
-            published=post.pubdate,
-        )
-            #updated=post.updated)
+            #published=post.pubdate,
+            updated=post.updated)
 
     response = make_response(unicode(feed))
     response.headers['Content-Type'] = 'application/atom+xml; charset=UTF-8'
