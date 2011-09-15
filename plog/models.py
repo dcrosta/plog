@@ -55,8 +55,8 @@ class TagCloud(db.Document):
 
         least = min(t.count for t in tags)
         most = max(t.count for t in tags)
-        range = most - least
-        scale = float(max(min(range, sizes), 1))
+        range = max(most - least, 1)
+        scale = float(min(range, sizes))
         for t in tags:
             t.bucket = sizes -  int(round(scale * (t.count - least) / range))
 
