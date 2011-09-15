@@ -5,6 +5,8 @@
 {% block content %}
     {% if start %}
     <h1>{{start.strftime(fmt)}}</h1>
+    {% elif tag %}
+    <h1>Posts tagged "{{tag}}"</h1>
     {% endif %}
     <div id="archive">
       {% for post in posts %}

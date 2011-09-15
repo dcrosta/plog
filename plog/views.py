@@ -18,6 +18,7 @@ def index():
         'index.html',
         posts=posts[:num_posts],
         archive=(posts.count() > num_posts),
+        cloud=TagCloud.get(),
     )
 
 @app.route('/feed')
@@ -62,6 +63,7 @@ def search():
     return render_template(
         'archive.html',
         posts=posts,
+        cloud=TagCloud.get(),
     )
 
 
@@ -98,8 +100,20 @@ def archive(start, end, fmt):
     return render_template(
         'archive.html',
         posts=posts,
+        cloud=TagCloud.get(),
         start=start,
         fmt=fmt,
+    )
+
+@app.route('/post/<tag>')
+def tag_archive(tag):
+    posts = Post.objects(published=True, tags=tag).order_by('-pubdate')
+    posts.only('pubdate', 'slug', 'title')
+    return render_template(
+        'archive.html',
+        posts=posts,
+        cloud=TagCloud.get(),
+        tag=tag,
     )
 
 @app.route('/post/<path:slug>')

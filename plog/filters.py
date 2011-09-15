@@ -1,3 +1,4 @@
+import json
 import re
 
 from plog import app
@@ -31,3 +32,8 @@ def pygments(value):
 
     lines = value.split('\n')
     return value
+
+@app.template_filter('json')
+def to_json(value):
+    return json.dumps(value, separators=(',', ':'))
+

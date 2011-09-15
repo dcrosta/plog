@@ -40,12 +40,46 @@
       $(document).ready(function() {
         $('#slug').attr('editable', 'false');
         $('#pubdate').datepicker({dateFormat: "yy-mm-dd"});
-        if ($('#pubdate').val() == "") {
-          $('#pubdate').val(new Date().format("yyyy-mm-dd"));
-        }
+        // grr, different formats in different libraries
+        $('#pubdate').val(new Date().format("yyyy-mm-dd"));
 
         $('#pubdate').change(updateslug);
         $('#title').keyup(updateslug);
+
+        // from http://jqueryui.com/demos/autocomplete/#multiple
+        function split(value) {
+          return value.split(/,\s*/);
+        }
+
+        var known_tags = {{form.known_tags|json|safe}};
+        $("#tags")
+          .bind("keydown", function(event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).data("autocomplete").menu.active) {
+              event.preventDefault();
+            }
+          })
+          .autocomplete({
+            minLength: 0,
+            autoFocus: false,
+            source: function(request, response) {
+              var options = $.ui.autocomplete.filter(known_tags, split(request.term).pop());
+              var used = split($('#tags').val());
+              response(options.filter(function(v) { return used.indexOf(v) == -1 }));
+            },
+            focus: function() {
+              // prevent value inserted on focus
+              return false;
+            },
+            select: function(event, ui) {
+              var terms = split(this.value);
+              terms.pop();
+              terms.push(ui.item.value);
+              terms.push("");
+              this.value = terms.join(", ");
+              return false;
+            }
+          });
       });
     </script>
 {% endblock %}

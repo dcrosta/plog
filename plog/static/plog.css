@@ -221,6 +221,54 @@ ol {
     #sidebar #search #search-button {
       border: 1px solid #EEE7E0;
       width: 75px; }
+  #sidebar #tagcloud h1 {
+    font-family: "Istok Web", sans-serif;
+    font-weight: normal;
+    font-size: 24.7px;
+    line-height: 28.5px;
+    margin: 19px 0px 11.4px 0px;
+    display: inline-block;
+    margin: 0px 5px; }
+  #sidebar #tagcloud h2 {
+    font-family: "Istok Web", sans-serif;
+    font-weight: normal;
+    font-size: 22.1px;
+    line-height: 25.5px;
+    margin: 17px 0px 10.2px 0px;
+    display: inline-block;
+    margin: 0px 5px; }
+  #sidebar #tagcloud h3 {
+    font-family: "Istok Web", sans-serif;
+    font-weight: normal;
+    font-size: 20.28px;
+    line-height: 23.4px;
+    margin: 15.6px 0px 9.36px 0px;
+    display: inline-block;
+    margin: 0px 5px; }
+  #sidebar #tagcloud h4 {
+    font-family: "Istok Web", sans-serif;
+    font-weight: normal;
+    font-size: 18.98px;
+    line-height: 21.9px;
+    margin: 14.6px 0px 8.76px 0px;
+    display: inline-block;
+    margin: 0px 5px; }
+  #sidebar #tagcloud h5 {
+    font-family: "Istok Web", sans-serif;
+    font-weight: normal;
+    font-size: 16.9px;
+    line-height: 19.5px;
+    margin: 13px 0px 7.8px 0px;
+    display: inline-block;
+    margin: 0px 5px; }
+  #sidebar #tagcloud h6 {
+    font-family: "Istok Web", sans-serif;
+    font-weight: normal;
+    font-size: 15.08px;
+    line-height: 17.4px;
+    margin: 11.6px 0px 6.96px 0px;
+    display: inline-block;
+    margin: 0px 5px; }
 
 #main {
   float: left;
@@ -261,9 +309,15 @@ ol {
   border-bottom: none;
   margin-bottom: 0; }
 #articles #archive {
-  font-size: 85%; }
-  #articles #archive h1.noarchive {
-    font-style: italic; }
+  margin-top: 2em; }
+  #articles #archive h1 {
+    font-family: "Istok Web", sans-serif;
+    font-weight: normal;
+    font-size: 23.4px;
+    line-height: 27px;
+    margin: 18px 0px 10.8px 0px; }
+    #articles #archive h1 time {
+      font-size: 80%; }
   #articles #archive article {
     margin-bottom: 10px;
     padding: 0px;

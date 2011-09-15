@@ -56,6 +56,14 @@
             <button id="search-button" type="submit">Search</button>
           </form>
         </section>
+
+        {% if cloud %}
+        <section id="tagcloud">
+          {% for tag in cloud %}
+          <h{{tag.bucket}}><a href="{{url_for('tag_archive', tag=tag.tag)}}">{{tag.tag}}</a></h{{tag.bucket}}>
+          {% endfor %}
+        </section>
+        {% endif %}
         {% endblock %}
       </aside>
     </div>

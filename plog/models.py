@@ -1,7 +1,8 @@
-__all__ = ('Comment', 'Post', 'PostForm', 'User')
+__all__ = ('Comment', 'Post', 'PostForm', 'User', 'TagCloud')
 
 from bcrypt import gensalt, hashpw
 from datetime import date, datetime
+from math import ceil
 import re
 
 from wtforms import Form, BooleanField, DateField, TextField, TextAreaField
@@ -12,6 +13,53 @@ from plog import app, db
 
 boundary = re.compile(r'\s')
 nopunc = re.compile(r'[^a-z0-9]')
+
+class TagCloud(db.Document):
+    tag = db.StringField(primary_key=True)
+    count = db.IntField()
+
+    meta = {
+        'allow_inheritance': False,
+        'indexes': [
+            {'fields': ['tag', '-count']},
+        ],
+    }
+
+    @staticmethod
+    def update():
+        results = Post.objects(published=True).map_reduce(
+            map_f="""
+            function() {
+                var tags = this.tags || [];
+                tags.forEach(function(tag) {
+                    emit(tag, 1);
+                });
+            }""",
+            reduce_f="""
+            function(key, values) {
+                return values.length;
+            }""",
+            output="tagcloud_tmp"
+        )
+        seen = set()
+        for result in results:
+            TagCloud(tag=result.key, count=int(result.value)).save()
+            seen.add(result.key)
+        TagCloud.objects(tag__nin=seen).delete()
+
+    @staticmethod
+    def get(sizes=6):
+        tags = [t for t in TagCloud.objects.order_by('tag')]
+        least = min(t.count for t in tags)
+        most = max(t.count for t in tags)
+        range = most - least
+        scale = float(max(min(range, sizes), 1))
+        for t in tags:
+            t.bucket = sizes -  int(round(scale * (t.count - least) / range))
+
+        print [(t.tag, t.bucket) for t in tags]
+        return tags
+
 
 class Comment(db.EmbeddedDocument):
     author = db.StringField(required=True)
@@ -28,6 +76,8 @@ class Post(db.Document):
 
     blurb = db.StringField(required=True)
     body = db.StringField(required=False)
+
+    tags = db.ListField(db.StringField())
 
     comments = db.ListField(db.EmbeddedDocumentField(Comment))
 
@@ -61,14 +111,39 @@ class Post(db.Document):
 
         super(Post, self).save()
 
+        # additionally, update the tag cloud
+        # map-reduce
+        TagCloud.update()
+
+class CommaListField(TextField):
+
+    def _value(self):
+        if self.data:
+            return ', '.join(self.data)
+        else:
+            return ''
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = [x.strip() for x in valuelist[0].split(',')]
+            self.data = [x for x in self.data if x != '']
+        else:
+            self.data = []
 
 class PostForm(Form):
     title = TextField(label='Title', validators=[Required()])
     slug = TextField(label='Slug')
+
+    tags = CommaListField()
+
+    pubdate = DateField(label='Date')
     published = BooleanField(label='Published', default=True)
-    pubdate = DateField(label='Date', description='Generated if left blank')
     blurb = TextAreaField(label='Blurb', validators=[Required()])
     body = TextAreaField(label='Body')
+
+    @property
+    def known_tags(self):
+        return [t.tag for t in TagCloud.objects.order_by('tag').only('tag')]
 
 
 class User(db.Document):

@@ -216,6 +216,15 @@ ol {
       width:75px;
     }
   }
+
+  #tagcloud {
+    h1 { @include header(0.95); display:inline-block; margin:0px 5px; }
+    h2 { @include header(0.85); display:inline-block; margin:0px 5px; }
+    h3 { @include header(0.78); display:inline-block; margin:0px 5px; }
+    h4 { @include header(0.73); display:inline-block; margin:0px 5px; }
+    h5 { @include header(0.65); display:inline-block; margin:0px 5px; }
+    h6 { @include header(0.58); display:inline-block; margin:0px 5px; }
+  }
 }
 
 
