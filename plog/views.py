@@ -159,7 +159,7 @@ def do_login():
     return redirect(request.args.get('next', url_for('dashboard')))
 
 
-@app.route('/admin/dashboard')
+@app.route('/admin')
 @login_required
 def dashboard():
     # moderation_queue = ...
@@ -221,7 +221,8 @@ def save_post(slug):
 
     return redirect(url_for('dashboard'))
 
-@app.route('/admin/slug')
+@app.route('/admin/getslug')
+@login_required
 def slug_for(title=None, pubdate=None):
     if title is None:
         title = request.args.get('title')
