@@ -51,8 +51,6 @@ class Post(db.Document):
     published = db.BooleanField(default=True)
 
     title = db.StringField(required=True)
-
-    # e.g. "2011/09/05/foo-bar-baz"
     slug = db.StringField(required=True, unique=True)
 
     blurb = db.StringField(required=True)
@@ -62,19 +60,16 @@ class Post(db.Document):
 
     comments = db.ListField(db.EmbeddedDocumentField(Comment))
 
-    # analytics
     views = db.IntField()
 
-    # for search
     _words = db.ListField(db.StringField())
 
     meta = {
         'allow_inheritance': False,
         'indexes': [
             {'fields': ['published', '_words', 'pubdate']},
-            {'fields': ['slug', 'published', 'pubdate']},
+            {'fields': ['published', 'slug', 'pubdate']},
         ],
-
     }
 
     def save(self):
