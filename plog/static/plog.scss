@@ -75,6 +75,11 @@ ol {
   margin-left: 32px;
 }
 
+img.icon {
+  position:relative;
+  top:4px;
+}
+
 @mixin wrapper ($lmargin:0px, $zindex:0, $rot:0deg) {
   margin-left:$lmargin;
   z-index:$zindex;
@@ -242,10 +247,6 @@ ol {
     }
 
     .tags {
-      img {
-        position:relative;
-        top:6px;
-      }
       .untagged {
         color:#777;
       }

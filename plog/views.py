@@ -240,6 +240,12 @@ def save_post(slug):
 
     return redirect(url_for('dashboard'))
 
+@app.route('/admin/delete/<path:slug>')
+@login_required
+def delete_post(slug):
+    Post.objects(slug=slug).delete()
+    return redirect(url_for('dashboard'))
+
 @app.route('/admin/getslug')
 @login_required
 def slug_for(title=None, pubdate=None):

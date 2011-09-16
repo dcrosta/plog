@@ -83,6 +83,10 @@ ol {
   list-style-type: decimal;
   margin-left: 32px; }
 
+img.icon {
+  position: relative;
+  top: 4px; }
+
 #wrapper-1 {
   margin-left: -10px;
   z-index: -2;
@@ -283,9 +287,6 @@ ol {
         color: #777; }
       #articles article header time a:focus, #articles article header time a:hover {
         color: #323130; }
-  #articles article .tags img {
-    position: relative;
-    top: 6px; }
   #articles article .tags .untagged {
     color: #777; }
   #articles article blockquote {
