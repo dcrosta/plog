@@ -1,9 +1,9 @@
 import re
 from datetime import datetime, timedelta
 import unicodedata
-import pyatom
 
 from flask import make_response, redirect, render_template, request, session, url_for
+from werkzeug.contrib.atom import AtomFeed
 
 from plog import app
 from plog.models import *
@@ -23,7 +23,7 @@ def index():
 
 @app.route('/feed')
 def feed():
-    feed = pyatom.AtomFeed(
+    feed = AtomFeed(
         title='late.am',
         feed_url=url_for('feed', _external=True),
         author={'name': 'Dan Crosta', 'email': 'dcrosta@late.am'},
@@ -40,7 +40,7 @@ def feed():
             author={'name': 'Dan Crosta', 'email': 'dcrosta@late.am'},
             url=url_for('post', slug=post.slug, _external=True),
             id=url_for('permalink', post_id=post.pk, _external=True),
-            #published=post.pubdate,
+            published=post.pubdate,
             updated=post.updated)
 
     response = make_response(unicode(feed))
