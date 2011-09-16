@@ -60,8 +60,7 @@ def search():
 
     query = [nopunc.sub('', word) for word in boundary.split(query)]
 
-    posts = Post.objects(published=True, _words__all=query)
-    posts.order_by('-pubdate')
+    posts = Post.objects(published=True, _words__all=query).order_by('-pubdate')
     return render_template(
         'archive.html',
         posts=posts,
