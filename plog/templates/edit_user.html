@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+{% include "_admin-nav.html" %}
+{% endblock %}
+
+{% block content %}
+    {% with submitlabel="Save", formid="editpost" %}
+    {% include "_form.html" with context %}
+    {% endwith %}
+{% endblock %}
+
