@@ -599,6 +599,8 @@ table.dashboard {
     padding: 2px 5px; }
   table.dashboard th {
     text-align: left; }
+  table.dashboard td:first-child {
+    white-space: nowrap; }
   table.dashboard .noborder td {
     border: none; }
   table.dashboard .noborder td:first-child {

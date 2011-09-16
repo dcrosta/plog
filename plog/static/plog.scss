@@ -472,6 +472,10 @@ table.dashboard {
     text-align:left;
   }
 
+  td:first-child {
+    white-space:nowrap;
+  }
+
   .noborder {
     td {
       border:none;
