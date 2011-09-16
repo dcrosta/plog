@@ -327,6 +327,17 @@ ol {
     }
   }
 
+  #preview article {
+    border:2px dashed #999;
+    background:#F3F2E0;
+    padding:0px 10px;
+    margin-bottom:40px;
+
+    h1:first-child {
+      margin-top:10px;
+    }
+  }
+
   article:last-child {
     padding-bottom:0;
     border-bottom:none;

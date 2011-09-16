@@ -20,6 +20,9 @@
         <th></th>
         <td>
           <input type="submit" name="save" value="{{submitlabel|default("Submit")}}"/>
+          {% for name, label in buttons %}
+          &nbsp; <input type="submit" name="{{name}}" value="{{label}}"/>
+          {% endfor %}
           {% if form.errors.__all__ %}
           <ul class="errors">
             {% for error in form.errors.__all__ %}

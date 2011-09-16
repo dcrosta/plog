@@ -4,9 +4,16 @@
 {% include "_admin-nav.html" %}
 {% endblock %}
 
+{% import "_macros.html" as macros with context %}
 
 {% block content %}
-    {% with submitlabel="Save", formid="editpost" %}
+    {% if preview %}
+    <div id="preview">
+    {{macros.article(post)}}
+    </div>
+    {% endif %}
+
+    {% with submitlabel="Save", formid="editpost", buttons=[('preview', "Preview")] %}
     {% include "_form.html" with context %}
     {% endwith %}
 {% endblock %}

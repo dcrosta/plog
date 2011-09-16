@@ -214,15 +214,25 @@ def save_post(slug):
             form=form,
         )
 
-    if post.published:
+    if 'save' in request.form and post.published:
         # decrement tagcloud count on all tags in the
         # previous version of the Post
         TagCloud.objects(tag__in=post.tags).update(inc__count=-1)
 
     for field in form:
         setattr(post, field.name, field.data)
-    post.slug = slug_for(title=post.title, pubdate=post.pubdate)
-    post.save()
+    if 'save' in request.form:
+        post.slug = slug_for(title=post.title, pubdate=post.pubdate)
+        post.save()
+
+    if 'preview' in request.form:
+        # form is validated, so errors will be highlighted
+        return render_template(
+            'edit_post.html',
+            form=form,
+            preview=True,
+            post=post,
+        )
 
     if post.published:
         # then increment tagcloud count on all tags in
