@@ -15,11 +15,10 @@ body {
   background: url("bg.png"); }
 
 a {
-  text-decoration: none;
   color: #111; }
 
 a:hover, a:focus {
-  border-bottom: 1px solid #111; }
+  color: #630; }
 
 h1 {
   font-family: "Istok Web", sans-serif;
@@ -62,6 +61,11 @@ h6 {
   font-size: 20.8px;
   line-height: 24px;
   margin: 16px 0px 9.6px 0px; }
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  text-decoration: none; }
+h1 a:hover, h1 a:focus, h2 a:hover, h2 a:focus, h3 a:hover, h3 a:focus, h4 a:hover, h4 a:focus, h5 a:hover, h5 a:focus, h6 a:hover, h6 a:focus {
+  text-decoration: underline; }
 
 pre {
   border: 1px solid #DDD;
@@ -137,8 +141,8 @@ ol {
     font-size: 80px;
     line-height: 1.2em;
     font-family: "Istok Web", sans-serif; }
-    #header h1 a {
-      color: #323130; }
+    #header h1 a:hover, #header h1 a:focus {
+      text-decoration: none; }
     #header h1 img {
       margin: 0px 6px; }
 
@@ -151,7 +155,7 @@ ol {
   #sidebar a {
     color: #555; }
   #sidebar a:hover, #sidebar a:focus {
-    color: #333; }
+    color: #630; }
   #sidebar h1 {
     font-family: "Istok Web", sans-serif;
     font-weight: normal;
@@ -535,7 +539,7 @@ footer {
   footer a {
     color: #777; }
   footer a:focus, footer a:hover {
-    color: #555; }
+    color: #630; }
 
 /* admin */
 table.form {
