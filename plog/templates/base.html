@@ -9,6 +9,7 @@
     <link rel="alternate" type="application/atom+xml" href="{{url_for('feed')}}" />
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='reset.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='plog.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{request.scheme|default('http')}}://fonts.googleapis.com/css?family=Istok+Web:700italic,400,700,400italic">
     {% block styles %}{% endblock %}
   </head>
   <body>

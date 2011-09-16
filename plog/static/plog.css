@@ -1,27 +1,3 @@
-@font-face {
-  font-family: 'Istok Web';
-  font-style: normal;
-  font-weight: 700;
-  src: local("Istok Web Bold"), local("IstokWeb-Bold"), url("http://themes.googleusercontent.com/static/fonts/istokweb/v2/2koEo4AKFSvK4B52O_MwatqQynqKV_9Plp7mupa0S4g.ttf") format("truetype"); }
-
-@font-face {
-  font-family: 'Istok Web';
-  font-style: italic;
-  font-weight: 400;
-  src: local("Istok Web Italic"), local("IstokWeb-Italic"), url("http://themes.googleusercontent.com/static/fonts/istokweb/v2/8-xqDtEk6sZ61magDpsV8V02b4v3fUxqf9CZJ1qUoIA.ttf") format("truetype"); }
-
-@font-face {
-  font-family: 'Istok Web';
-  font-style: normal;
-  font-weight: 400;
-  src: local("Istok Web Regular"), local("IstokWeb-Regular"), url("http://themes.googleusercontent.com/static/fonts/istokweb/v2/bFTnH16NdZ5qlv4Xg5Q0aaCWcynf_cDxXwCLxiixG1c.ttf") format("truetype"); }
-
-@font-face {
-  font-family: 'Istok Web';
-  font-style: italic;
-  font-weight: 700;
-  src: local("Istok Web Bold Italic"), local("IstokWeb-BoldItalic"), url("http://themes.googleusercontent.com/static/fonts/istokweb/v2/ycQ3g52ELrh3o_HYCNNUwyBnJMIPt0VoltfALX9gDFQ.ttf") format("truetype"); }
-
 /* $serif:"Georiga", serif; */
 header, hgroup, aside, section, article, time, nav, footer, dialog, figure, figcaption {
   display: block; }
