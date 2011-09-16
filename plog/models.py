@@ -26,30 +26,8 @@ class TagCloud(db.Document):
     }
 
     @staticmethod
-    def update():
-        results = Post.objects(published=True).map_reduce(
-            map_f="""
-            function() {
-                var tags = this.tags || [];
-                tags.forEach(function(tag) {
-                    emit(tag, 1);
-                });
-            }""",
-            reduce_f="""
-            function(key, values) {
-                return values.length;
-            }""",
-            output="tagcloud_tmp"
-        )
-        seen = set()
-        for result in results:
-            TagCloud(tag=result.key, count=int(result.value)).save()
-            seen.add(result.key)
-        TagCloud.objects(tag__nin=seen).delete()
-
-    @staticmethod
     def get(sizes=6):
-        tags = [t for t in TagCloud.objects.order_by('tag')]
+        tags = [t for t in TagCloud.objects(count__gt=0).order_by('tag')]
         if tags == []:
             return tags
 
@@ -115,10 +93,6 @@ class Post(db.Document):
         super(Post, self).save()
 
         self.updated = datetime.utcnow()
-
-        # additionally, update the tag cloud
-        # map-reduce
-        TagCloud.update()
 
 class CommaListField(TextField):
 

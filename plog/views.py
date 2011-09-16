@@ -214,11 +214,20 @@ def save_post(slug):
             form=form,
         )
 
+    if post.published:
+        # decrement tagcloud count on all tags in the
+        # previous version of the Post
+        TagCloud.objects(tag__in=post.tags).update(inc__count=-1)
+
     for field in form:
         setattr(post, field.name, field.data)
-
     post.slug = slug_for(title=post.title, pubdate=post.pubdate)
     post.save()
+
+    if post.published:
+        # then increment tagcloud count on all tags in
+        # the current version of the Post
+        TagCloud.objects(tag__in=post.tags).update(inc__count=1)
 
     return redirect(url_for('dashboard'))
 
@@ -254,7 +263,7 @@ def edit_user():
 
 @app.route('/admin/user', methods=['POST'])
 @login_required
-def do_edit_user():
+def save_user():
     user = User.objects.get_or_404(pk=session['user_id'])
     form = EditUserForm(formdata=request.form, obj=user)
     if not form.validate():
