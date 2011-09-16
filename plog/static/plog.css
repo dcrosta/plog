@@ -594,9 +594,11 @@ table.form {
     margin: 0px 0px 0px 10px;
     padding: 0px;
     font-size: 15px;
-    color: #c33; }
+    color: #c33;
+    list-style-type: none;
+    margin: 0px; }
     table.form ul.errors li:before {
-      content: "« "; }
+      content: "↑ "; }
 
 table.dashboard {
   border: 1px solid #ccc;

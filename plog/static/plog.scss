@@ -455,9 +455,11 @@ table.form {
     padding:0px;
     font-size:15px;
     color:#c33;
+    list-style-type:none;
+    margin:0px;
 
     li:before {
-      content:"« ";
+      content:"↑ ";
     }
   }
 
