@@ -168,9 +168,9 @@ def dashboard():
 
     # TODO: finish this
     comments = [
-        {'post': {'title': 'Test', 'slug': '2011/09/13/test'},
-         'author': {'full_name': 'Nice User', 'email': 'nice.user@gmail.com'},
-         'body': """<script>alert('evil!');</script>"""},
+    #    {'post': {'title': 'Test', 'slug': '2011/09/13/test'},
+    #     'author': {'full_name': 'Nice User', 'email': 'nice.user@gmail.com'},
+    #     'body': """<script>alert('evil!');</script>"""},
     ]
 
     return render_template(
@@ -241,4 +241,34 @@ def slug_for(title=None, pubdate=None):
     title = re.sub('[\s]+', '-', title)
 
     return '%4d/%02d/%02d/%s' % (pubdate.year, pubdate.month, pubdate.day, title)
+
+@app.route('/admin/user', methods=['GET'])
+@login_required
+def edit_user():
+    user = User.objects.get_or_404(pk=session['user_id'])
+    form = EditUserForm(obj=user)
+    return render_template(
+        'edit_user.html',
+        form=form,
+    )
+
+@app.route('/admin/user', methods=['POST'])
+@login_required
+def do_edit_user():
+    user = User.objects.get_or_404(pk=session['user_id'])
+    form = EditUserForm(formdata=request.form, obj=user)
+    if not form.validate():
+        return render_template(
+            'edit_user.html',
+            form=form,
+        )
+
+    for field in form:
+        if field.name not in ('password', 'confirm'):
+            setattr(user, field.name, field.data)
+        elif field.name == 'password':
+            user.set_password(field.data)
+
+    user.save()
+    return redirect(url_for('dashboard'))
 

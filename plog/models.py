@@ -1,4 +1,4 @@
-__all__ = ('Comment', 'Post', 'PostForm', 'User', 'TagCloud')
+__all__ = ('Comment', 'Post', 'PostForm', 'TagCloud')
 
 from bcrypt import gensalt, hashpw
 from datetime import date, datetime
@@ -149,20 +149,4 @@ class PostForm(Form):
     @property
     def known_tags(self):
         return [t.tag for t in TagCloud.objects.order_by('tag').only('tag')]
-
-
-class User(db.Document):
-    username = db.StringField(required=True, unique=True)
-    password = db.StringField(required=True)
-
-    first_name = db.StringField()
-    last_name = db.StringField()
-    email = db.StringField()
-
-    def set_password(self, raw_password):
-        self.password = hashpw(password, gensalt(app.config.get('BCRYPT_LOG_ROUNDS', 14)))
-
-    meta = {
-        'allow_inheritance': False,
-    }
 

@@ -60,6 +60,10 @@
           <td class="ajax"></td>
           <td><button id="{{comment.id}}" class="reject">Reject</button></td>
         </tr>
+        {% else %}
+        <tr>
+          <td colspan="3"><em>No unmoderated comments</em></td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
