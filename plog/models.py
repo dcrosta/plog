@@ -21,7 +21,7 @@ class TagCloud(db.Document):
     meta = {
         'allow_inheritance': False,
         'indexes': [
-            {'fields': ['tag', '-count']},
+            {'fields': ['count', 'tag']},
         ],
     }
 
