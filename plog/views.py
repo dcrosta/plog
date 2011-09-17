@@ -220,7 +220,9 @@ def save_post(slug):
     if 'save' in request.form and post.published:
         # decrement tagcloud count on all tags in the
         # previous version of the Post
-        TagCloud.objects(tag__in=post.tags).update(inc__count=-1)
+        for tag in post.tags:
+            TagCloud.objects(tag=tag, count__gte=1).update(
+                inc__count=-1)
 
     for field in form:
         if isinstance(field.data, datetime):
@@ -246,7 +248,9 @@ def save_post(slug):
     if post.published:
         # then increment tagcloud count on all tags in
         # the current version of the Post
-        TagCloud.objects(tag__in=post.tags).update(inc__count=1)
+        for tag in post.tags:
+            TagCloud.objects(tag=tag).update(
+                inc__count=1, upsert=True)
 
     return redirect(url_for('dashboard'))
 
