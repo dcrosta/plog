@@ -218,7 +218,6 @@ def new_post():
 @login_required
 def edit_post(slug):
     post = Post.objects.get_or_404(slug=slug)
-    post.pubdate = post.pubdate.replace(tzinfo=utc).astimezone(eastern)
     form = PostForm(obj=post)
     return render_template(
         'edit_post.html',
@@ -248,16 +247,7 @@ def save_post(slug):
             inc__count=-1, set__updated=datetime.utcnow())
 
     for field in form:
-        if isinstance(field.data, datetime):
-            value = field.data
-            value = eastern.localize(value)
-            value = value.astimezone(utc).replace(tzinfo=None)
-            setattr(post, field.name, value)
-        else:
-            setattr(post, field.name, field.data)
-    if 'save' in request.form:
-        post.slug = make_slug(post.title, post.pubdate)
-        post.save()
+        setattr(post, field.name, field.data)
 
     if 'preview' in request.form:
         # form is validated, so errors will be highlighted
@@ -267,8 +257,11 @@ def save_post(slug):
             preview=True,
             post=post,
         )
+    elif 'save' in request.form:
+        post.slug = make_slug(post.title, post.pubdate)
+        post.save()
 
-    if post.published:
+    if 'save' in form and post.published:
         # then increment tagcloud count on all tags in
         # the current version of the Post
         for tag in post.tags:

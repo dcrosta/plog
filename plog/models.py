@@ -4,6 +4,7 @@ from bcrypt import gensalt, hashpw
 from datetime import date, datetime
 from math import ceil
 import re
+from pytz import timezone, utc
 
 from wtforms import Form, BooleanField, DateTimeField, TextField, TextAreaField
 from wtforms.validators import Required
@@ -73,12 +74,32 @@ class Post(db.Document):
         ],
     }
 
+    def __init__(self, *args, **kwargs):
+        super(Post, self).__init__(*args, **kwargs)
+
+        # perform timezone conversion to UTC;
+        # if datetime fields don't have a timezone,
+        # assume they are in site_tz's timezone
+        site_tz = timezone(app.config.get('TIMEZONE', 'US/Eastern'))
+        if self.pubdate.tzinfo is None:
+            self.pubdate = self.pubdate.replace(tzinfo=utc).astimezone(site_tz)
+
     def save(self):
         words = set(boundary.split(self.title.lower()))
         words.update(boundary.split(self.blurb.lower()))
         words.update(boundary.split(self.body.lower()))
         words = set(nopunc.sub('', word) for word in words)
         self._words = list(words)
+
+        # perform timezone conversion to UTC;
+        # if datetime fields don't have a timezone,
+        # assume they are in site_tz's timezone
+        site_tz = timezone(app.config.get('TIMEZONE', 'US/Eastern'))
+
+        # pubdate is required
+        if self.pubdate.tzinfo is None:
+            self.pubdate = site_tz.localize(self.pubdate)
+        self.pubdate = self.pubdate.astimezone(utc).replace(tzinfo=None)
 
         self.updated = datetime.utcnow()
         super(Post, self).save()
@@ -104,7 +125,7 @@ class PostForm(Form):
 
     tags = CommaListField()
 
-    pubdate = DateTimeField(label='Date', format='%Y-%m-%d %H:%S')
+    pubdate = DateTimeField(label='Date', format='%Y-%m-%d %H:%M')
     published = BooleanField(label='Published', default=True)
     blurb = TextAreaField(label='Blurb', validators=[Required()])
     body = TextAreaField(label='Body')
