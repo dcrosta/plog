@@ -545,15 +545,15 @@ footer {
 /* admin */
 table.form {
   width: 100%; }
-  table.form td, table.form th {
+  table.form > tbody > tr > td, table.form > tbody > tr > th {
     font: normal 19px/26px "Istok Web", sans-serif;
     padding-bottom: 6px; }
-  table.form th {
+  table.form > tbody > tr > th {
     width: 100px;
     text-align: right;
     vertical-align: top;
     padding-top: 5px; }
-  table.form td {
+  table.form > tbody > tr > td {
     width: 470px;
     padding-left: 20px; }
   table.form input[type="text"], table.form input[type="password"], table.form textarea {
@@ -588,6 +588,12 @@ table.form {
     margin: 0px; }
     table.form ul.errors li:before {
       content: "↑ "; }
+  table.form .ui-datetime td, table.form .ui-datetime th {
+    font-size: 0.75em; }
+  table.form .ui-datetime-title {
+    font-size: 0.75em; }
+  table.form .ui-widget.ui-datetime-calendar {
+    width: 12.75em !important; }
 
 table.dashboard {
   border: 1px solid #ccc;

@@ -391,19 +391,19 @@ footer {
 table.form {
   width:100%;
 
-  td, th {
+  > tbody > tr > td, > tbody > tr > th {
     font:normal 19px/26px $sansserif;
     padding-bottom:6px;
   }
 
-  th {
+  > tbody > tr > th {
     width: 100px;
     text-align:right;
     vertical-align:top;
     padding-top:5px;
   }
 
-  td {
+  > tbody > tr > td {
     width:$bodywidth - 120px;
     padding-left:20px;
   }
@@ -455,6 +455,20 @@ table.form {
     }
   }
 
+  .ui-datetime {
+    td, th {
+      font-size:0.75em;
+
+      a {
+      }
+    }
+  }
+  .ui-datetime-title {
+    font-size:0.75em;
+  }
+  .ui-widget.ui-datetime-calendar {
+    width:12.75em !important;
+  }
 }
 
 table.dashboard {

@@ -47,11 +47,12 @@
 
       $(document).ready(function() {
         $('#slug').attr('editable', 'false');
-        $('#pubdate').datepicker({dateFormat: "yy-mm-dd"});
+
+        var opts = {dateFormat: "yy-mm-dd hh:ii"};
         if ($('#pubdate').val() == "") {
-          // grr, different formats in different libraries
-          $('#pubdate').val(new Date().format("yyyy-mm-dd"));
+          opts.value = "+0min";
         }
+        $('#pubdate').datetime(opts);
 
         $('#pubdate').change(updateslug);
         $('#title').keyup(updateslug);
