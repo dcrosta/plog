@@ -4,6 +4,7 @@ from setuptools import setup, find_packages
 README = file(join(dirname(__file__), 'README.md')).read()
 
 requires = [
+    'apesmit',
     'Flask',
     'Flask-MongoEngine',
     'markdown2',
