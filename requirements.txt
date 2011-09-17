@@ -1,0 +1,7 @@
+http://www.florian-diesch.de/software/apesmit/dist/apesmit-0.01.tar.gz
+flask
+mongoengine
+markdown2
+py-bcrypt
+pygments
+pytz
