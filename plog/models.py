@@ -81,7 +81,7 @@ class Post(db.Document):
         # if datetime fields don't have a timezone,
         # assume they are in site_tz's timezone
         site_tz = timezone(app.config.get('TIMEZONE', 'US/Eastern'))
-        if self.pubdate.tzinfo is None:
+        if self.pubdate is not None and self.pubdate.tzinfo is None:
             self.pubdate = self.pubdate.replace(tzinfo=utc).astimezone(site_tz)
 
     def save(self):

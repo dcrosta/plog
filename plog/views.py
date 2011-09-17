@@ -261,7 +261,7 @@ def save_post(slug):
         post.slug = make_slug(post.title, post.pubdate)
         post.save()
 
-    if 'save' in form and post.published:
+    if 'save' in request.form and post.published:
         # then increment tagcloud count on all tags in
         # the current version of the Post
         for tag in post.tags:
