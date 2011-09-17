@@ -6,19 +6,21 @@ from math import ceil
 import re
 from pytz import timezone, utc
 
-from wtforms import Form, BooleanField, DateTimeField, TextField, TextAreaField
-from wtforms.validators import Required
+from mongoengine import *
 
-from plog import app, db
+import wtforms
+from wtforms import validators
+
+from plog import app
 
 
 boundary = re.compile(r'\s')
 nopunc = re.compile(r'[^a-z0-9]')
 
-class TagCloud(db.Document):
-    tag = db.StringField(primary_key=True)
-    count = db.IntField()
-    updated = db.DateTimeField()
+class TagCloud(Document):
+    tag = StringField(primary_key=True)
+    count = IntField()
+    updated = DateTimeField()
 
     meta = {
         'allow_inheritance': False,
@@ -43,28 +45,28 @@ class TagCloud(db.Document):
         return tags
 
 
-class Comment(db.EmbeddedDocument):
-    author = db.StringField(required=True)
-    body = db.StringField(required=True)
+class Comment(EmbeddedDocument):
+    author = StringField(required=True)
+    body = StringField(required=True)
 
-class Post(db.Document):
-    pubdate = db.DateTimeField(required=True)
-    updated = db.DateTimeField()
-    published = db.BooleanField(default=True)
+class Post(Document):
+    pubdate = DateTimeField(required=True)
+    updated = DateTimeField()
+    published = BooleanField(default=True)
 
-    title = db.StringField(required=True)
-    slug = db.StringField(required=True, unique=True)
+    title = StringField(required=True)
+    slug = StringField(required=True, unique=True)
 
-    blurb = db.StringField(required=True)
-    body = db.StringField(required=False)
+    blurb = StringField(required=True)
+    body = StringField(required=False)
 
-    tags = db.ListField(db.StringField())
+    tags = ListField(StringField())
 
-    comments = db.ListField(db.EmbeddedDocumentField(Comment))
+    comments = ListField(EmbeddedDocumentField(Comment))
 
-    views = db.IntField()
+    views = IntField()
 
-    _words = db.ListField(db.StringField())
+    _words = ListField(StringField())
 
     meta = {
         'allow_inheritance': False,
@@ -104,7 +106,7 @@ class Post(db.Document):
         self.updated = datetime.utcnow()
         super(Post, self).save()
 
-class CommaListField(TextField):
+class CommaListField(wtforms.TextField):
 
     def _value(self):
         if self.data:
@@ -119,16 +121,16 @@ class CommaListField(TextField):
         else:
             self.data = []
 
-class PostForm(Form):
-    title = TextField(label='Title', validators=[Required()])
-    slug = TextField(label='Slug')
+class PostForm(wtforms.Form):
+    title = wtforms.TextField(label='Title', validators=[validators.Required()])
+    slug = wtforms.TextField(label='Slug')
 
     tags = CommaListField()
 
-    pubdate = DateTimeField(label='Date', format='%Y-%m-%d %H:%M')
-    published = BooleanField(label='Published', default=True)
-    blurb = TextAreaField(label='Blurb', validators=[Required()])
-    body = TextAreaField(label='Body')
+    pubdate = wtforms.DateTimeField(label='Date', format='%Y-%m-%d %H:%M')
+    published = wtforms.BooleanField(label='Published', default=True)
+    blurb = wtforms.TextAreaField(label='Blurb', validators=[validators.Required()])
+    body = wtforms.TextAreaField(label='Body')
 
     @property
     def known_tags(self):

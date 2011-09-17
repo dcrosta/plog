@@ -6,9 +6,9 @@ README = file(join(dirname(__file__), 'README.md')).read()
 # use pip install -r requirements.txt instead
 requires = [
     'apesmit',
-    'Flask',
-    'Flask-MongoEngine',
+    'flask',
     'markdown2',
+    'mongoengine',
     'py-bcrypt',
     'pygments',
     'pytz',

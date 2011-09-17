@@ -4,20 +4,22 @@ from bcrypt import gensalt, hashpw
 from functools import wraps
 from urllib import urlencode, quote
 
+from mongoengine import *
+
 from flask import redirect, request, session, url_for
-from wtforms import Form, TextField, PasswordField
-from wtforms.validators import EqualTo, Length, Required
+import wtforms
+from wtforms import validators
 
 from plog import app, db
 
 
-class User(db.Document):
-    username = db.StringField(required=True, unique=True)
-    password = db.StringField(required=True)
+class User(Document):
+    username = StringField(required=True, unique=True)
+    password = StringField(required=True)
 
-    first_name = db.StringField()
-    last_name = db.StringField()
-    email = db.StringField()
+    first_name = StringField()
+    last_name = StringField()
+    email = StringField()
 
     def set_password(self, raw_password):
         self.password = hashpw(raw_password, gensalt(app.config.get('BCRYPT_LOG_ROUNDS', 14)))
@@ -59,9 +61,9 @@ def create_user(username, password, **kwargs):
         # probably duplicate username
         return None
 
-class LoginForm(Form):
-    username = TextField(validators=[Required(message='Required')])
-    password = PasswordField(validators=[Required(message='Required')])
+class LoginForm(wtforms.Form):
+    username = wtforms.TextField(validators=[validators.Required(message='Required')])
+    password = wtforms.PasswordField(validators=[validators.Required(message='Required')])
 
     def validate(self):
         if not super(LoginForm, self).validate():
@@ -72,15 +74,15 @@ class LoginForm(Form):
             self.errors['__all__'] = ['Invalid login']
         return self.user is not None
 
-class EditUserForm(Form):
-    username = TextField()
+class EditUserForm(wtforms.Form):
+    username = wtforms.TextField()
 
-    password = PasswordField(validators=[Length(min=8, message='Too short')])
-    confirm = PasswordField(validators=[EqualTo('password', 'Password mismatch')])
+    password = wtforms.PasswordField(validators=[validators.Length(min=8, message='Too short')])
+    confirm = wtforms.PasswordField(validators=[validators.EqualTo('password', 'Password mismatch')])
 
-    first_name = TextField()
-    last_name = TextField()
-    email = TextField()
+    first_name = wtforms.TextField()
+    last_name = wtforms.TextField()
+    email = wtforms.TextField()
 
 
 

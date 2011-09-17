@@ -12,6 +12,7 @@ from plog import app
 from plog.models import *
 from plog.auth import *
 from plog.filters import domarkdown
+from plog.utils import *
 
 eastern = timezone('US/Eastern')
 
@@ -146,12 +147,12 @@ def tag_archive(tag):
 
 @app.route('/post/id/<post_id>')
 def permalink(post_id):
-    post = Post.objects.get_or_404(pk=post_id)
+    post = get_or_404(Post, pk=post_id)
     return redirect(url_for('post', slug=post.slug))
 
 @app.route('/post/<path:slug>')
 def post(slug):
-    post = Post.objects.get_or_404(slug=slug, published=True)
+    post = get_or_404(Post, slug=slug, published=True)
     if not is_logged_in():
         post.update(inc__views=1)
     return render_template(
@@ -217,7 +218,7 @@ def new_post():
 @app.route('/admin/post/<path:slug>', methods=['GET'])
 @login_required
 def edit_post(slug):
-    post = Post.objects.get_or_404(slug=slug)
+    post = get_or_404(Post, slug=slug)
     form = PostForm(obj=post)
     return render_template(
         'edit_post.html',
@@ -231,7 +232,7 @@ def save_post(slug):
     if slug == 'new':
         post = Post()
     else:
-        post = Post.objects.get_or_404(slug=slug)
+        post = get_or_404(Post, slug=slug)
 
     form = PostForm(request.form)
     if not form.validate():
@@ -303,7 +304,7 @@ def make_slug(title, utc_pubdate):
 @app.route('/admin/user', methods=['GET'])
 @login_required
 def edit_user():
-    user = User.objects.get_or_404(pk=session['user_id'])
+    user = get_or_404(User, pk=session['user_id'])
     form = EditUserForm(obj=user)
     return render_template(
         'edit_user.html',
@@ -313,7 +314,7 @@ def edit_user():
 @app.route('/admin/user', methods=['POST'])
 @login_required
 def save_user():
-    user = User.objects.get_or_404(pk=session['user_id'])
+    user = get_or_404(User, pk=session['user_id'])
     form = EditUserForm(formdata=request.form, obj=user)
     if not form.validate():
         return render_template(
