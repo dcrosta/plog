@@ -221,7 +221,7 @@ def save_post(slug):
         # decrement tagcloud count on all tags in the
         # previous version of the Post
         TagCloud.objects(tag__in=post.tags, count__gte=1).update(
-            inc__count=-1, updated__set=datetime.utcnow())
+            inc__count=-1, set__updated=datetime.utcnow())
 
     for field in form:
         if isinstance(field.data, datetime):
@@ -249,7 +249,7 @@ def save_post(slug):
         # the current version of the Post
         for tag in post.tags:
             TagCloud.objects(tag=tag).update(
-                inc__count=1, updated__set=datetime.utcnow(), upsert=True)
+                inc__count=1, set__updated=datetime.utcnow(), upsert=True)
 
     return redirect(url_for('dashboard'))
 
