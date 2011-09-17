@@ -17,6 +17,7 @@ nopunc = re.compile(r'[^a-z0-9]')
 class TagCloud(db.Document):
     tag = db.StringField(primary_key=True)
     count = db.IntField()
+    updated = db.DateTimeField()
 
     meta = {
         'allow_inheritance': False,
