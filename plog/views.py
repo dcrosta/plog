@@ -220,9 +220,8 @@ def save_post(slug):
     if 'save' in request.form and post.published:
         # decrement tagcloud count on all tags in the
         # previous version of the Post
-        for tag in post.tags:
-            TagCloud.objects(tag=tag, count__gte=1).update(
-                inc__count=-1)
+        TagCloud.objects(tag__in=post.tags, count__gte=1).update(
+            inc__count=-1)
 
     for field in form:
         if isinstance(field.data, datetime):
