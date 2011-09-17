@@ -9,7 +9,7 @@ from werkzeug.contrib.atom import AtomFeed
 from plog import app
 from plog.models import *
 from plog.auth import *
-from plog.filters import markdown
+from plog.filters import do_markdown
 
 eastern = timezone('US/Eastern')
 
@@ -38,7 +38,7 @@ def feed():
     for post in posts[:20]:
         feed.add(
             title=post.title,
-            content=markdown(post.blurb + '\n' + post.body),
+            content=do_markdown(post.blurb + '\n' + post.body),
             content_type='html',
             author={'name': 'Dan Crosta', 'email': 'dcrosta@late.am'},
             url=url_for('post', slug=post.slug, _external=True),
