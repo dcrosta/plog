@@ -227,7 +227,6 @@ def save_post(slug):
             value = field.data
             value = eastern.localize(value)
             value = value.astimezone(utc).replace(tzinfo=None)
-            print "value is", value
             setattr(post, field.name, value)
         else:
             setattr(post, field.name, field.data)
