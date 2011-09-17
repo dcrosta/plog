@@ -9,6 +9,7 @@ requires = [
     'markdown2',
     'py-bcrypt',
     'pygments',
+    'pytz',
 ]
 
 setup(

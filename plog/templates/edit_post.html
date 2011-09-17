@@ -20,11 +20,12 @@
 
 {% block styles %}
     <link rel="stylesheet" href="{{url_for('static', filename='jquery-ui.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='jquery.ui.datetime.css')}}"/>
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript" src="{{url_for('static', filename='jquery-ui.min.js')}}"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='dateformat.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='jquery.ui.datetime.min.js')}}"></script>
     <script type="text/javascript">
       var timer = null;
       var slugurl = "{{url_for('slug_for')}}";

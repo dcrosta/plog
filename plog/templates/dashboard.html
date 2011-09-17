@@ -38,7 +38,7 @@
         <tr>
           <td>
             <input type="checkbox" disabled="disabled"{% if post.published %} checked="checked"{% endif %}/>
-            <a href="{{url_for('edit_post', slug=post.slug)}}">{{post.pubdate.strftime('%Y-%m-%d')}}</a>
+            <a href="{{url_for('edit_post', slug=post.slug)}}">{{post.pubdate|datetime('%Y-%m-%d')}}</a>
           </td>
           <td><a href="{{url_for('edit_post', slug=post.slug)}}">{{post.title}}</a></td>
           <td><a href="{{url_for('edit_post', slug=post.slug)}}">{{post.tags|join(', ')}}</a></td>

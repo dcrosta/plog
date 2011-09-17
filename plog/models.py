@@ -5,7 +5,7 @@ from datetime import date, datetime
 from math import ceil
 import re
 
-from wtforms import Form, BooleanField, DateField, TextField, TextAreaField
+from wtforms import Form, BooleanField, DateTimeField, TextField, TextAreaField
 from wtforms.validators import Required
 
 from plog import app, db
@@ -79,15 +79,8 @@ class Post(db.Document):
         words = set(nopunc.sub('', word) for word in words)
         self._words = list(words)
 
-        if isinstance(self.pubdate, date):
-            self.pubdate = datetime(
-                self.pubdate.year,
-                self.pubdate.month,
-                self.pubdate.day)
-
-        super(Post, self).save()
-
         self.updated = datetime.utcnow()
+        super(Post, self).save()
 
 class CommaListField(TextField):
 
@@ -110,7 +103,7 @@ class PostForm(Form):
 
     tags = CommaListField()
 
-    pubdate = DateField(label='Date')
+    pubdate = DateTimeField(label='Date', format='%Y-%m-%d %H:%S')
     published = BooleanField(label='Published', default=True)
     blurb = TextAreaField(label='Blurb', validators=[Required()])
     body = TextAreaField(label='Body')

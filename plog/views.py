@@ -1,5 +1,6 @@
-import re
 from datetime import datetime, timedelta
+from pytz import timezone, utc
+import re
 import unicodedata
 
 from flask import make_response, redirect, render_template, request, session, url_for
@@ -9,6 +10,8 @@ from plog import app
 from plog.models import *
 from plog.auth import *
 from plog.filters import markdown
+
+eastern = timezone('US/Eastern')
 
 @app.route('/')
 def index():
@@ -191,6 +194,7 @@ def new_post():
 @login_required
 def edit_post(slug):
     post = Post.objects.get_or_404(slug=slug)
+    post.pubdate = post.pubdate.replace(tzinfo=utc).astimezone(eastern)
     form = PostForm(obj=post)
     return render_template(
         'edit_post.html',
@@ -219,9 +223,16 @@ def save_post(slug):
         TagCloud.objects(tag__in=post.tags).update(inc__count=-1)
 
     for field in form:
-        setattr(post, field.name, field.data)
+        if isinstance(field.data, datetime):
+            value = field.data
+            value = eastern.localize(value)
+            value = value.astimezone(utc).replace(tzinfo=None)
+            print "value is", value
+            setattr(post, field.name, value)
+        else:
+            setattr(post, field.name, field.data)
     if 'save' in request.form:
-        post.slug = slug_for(title=post.title, pubdate=post.pubdate)
+        post.slug = make_slug(post.title, post.pubdate)
         post.save()
 
     if 'preview' in request.form:
@@ -248,17 +259,21 @@ def delete_post(slug):
 
 @app.route('/admin/getslug')
 @login_required
-def slug_for(title=None, pubdate=None):
-    if title is None:
-        title = request.args.get('title')
-    if pubdate is None:
-        pubdate = request.args.get('pubdate')
+def slug_for():
+    title = request.args.get('title')
+    pubdate = request.args.get('pubdate')
 
     if title is None or pubdate is None:
         return ''
 
     if isinstance(pubdate, basestring):
-        pubdate = datetime.strptime(pubdate, '%Y-%m-%d')
+        pubdate = datetime.strptime(pubdate, '%Y-%m-%d %H:%M')
+
+    pubdate = pubdate.replace(tzinfo=eastern).astimezone(utc)
+    return make_slug(title, pubdate)
+
+def make_slug(title, utc_pubdate):
+    pubdate = utc_pubdate.replace(tzinfo=utc).astimezone(eastern)
 
     title = unicodedata.normalize('NFKD', title).encode('ascii', 'ignore')
     title = unicode(re.sub('[^\w\s-]', '', title).strip().lower())

@@ -2,10 +2,10 @@
     <article>
       <header>
         <h1>
-          <time datetime="{{post.pubdate.strftime('%Y-%m-%dT%H:%M:%SZ')}}">
-            <a href="{{url_for('year_archive', year=post.pubdate.year)}}">{{post.pubdate.strftime('%Y')}}</a> /
-            <a href="{{url_for('month_archive', year=post.pubdate.year, month=post.pubdate.month)}}">{{post.pubdate.strftime('%m')|nozero(True)}}</a> /
-            <a href="{{url_for('day_archive', year=post.pubdate.year, month=post.pubdate.month, day=post.pubdate.day)}}">{{post.pubdate.strftime('%d')|nozero}}</a>
+          <time datetime="{{post.pubdate|datetime('%Y-%m-%dT%H:%M:%SZ', 'utc')}}">
+            <a href="{{url_for('year_archive', year=post.pubdate.year)}}">{{post.pubdate|datetime('%Y')}}</a> /
+            <a href="{{url_for('month_archive', year=post.pubdate.year, month=post.pubdate.month)}}">{{post.pubdate|datetime('%m')|nozero(True)}}</a> /
+            <a href="{{url_for('day_archive', year=post.pubdate.year, month=post.pubdate.month, day=post.pubdate.day)}}">{{post.pubdate|datetime('%d')|nozero}}</a>
           </time>
           <a rel="bookmark" href="{{url_for('post', slug=post.slug)}}">{{post.title}}</a>
         </h1>
@@ -39,10 +39,10 @@
       <article>
         <header>
           <h1>
-            <time datetime="{{post.pubdate.strftime('%Y-%m-%dT%H:%M:%SZ')}}">
-              <a href="{{url_for('year_archive', year=post.pubdate.year)}}">{{post.pubdate.strftime('%Y')}}</a> /
-              <a href="{{url_for('month_archive', year=post.pubdate.year, month=post.pubdate.month)}}">{{post.pubdate.strftime('%m')|nozero}}</a> /
-              <a href="{{url_for('day_archive', year=post.pubdate.year, month=post.pubdate.month, day=post.pubdate.day)}}">{{post.pubdate.strftime('%d')|nozero}}</a> /
+            <time datetime="{{post.pubdate|datetime('%Y-%m-%dT%H:%M:%SZ', 'utc')}}">
+              <a href="{{url_for('year_archive', year=post.pubdate.year)}}">{{post.pubdate|datetime('%Y')}}</a> /
+              <a href="{{url_for('month_archive', year=post.pubdate.year, month=post.pubdate.month)}}">{{post.pubdate|datetime('%m')|nozero}}</a> /
+              <a href="{{url_for('day_archive', year=post.pubdate.year, month=post.pubdate.month, day=post.pubdate.day)}}">{{post.pubdate|datetime('%d')|nozero}}</a> /
             </time>
             <a rel="bookmark" href="{{url_for('post', slug=post.slug)}}">{{post.title}}</a>
           </h1>

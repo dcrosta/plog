@@ -1,4 +1,5 @@
 import json
+from pytz import utc, timezone
 import re
 
 from plog import app
@@ -38,4 +39,10 @@ def pygments(value):
 @app.template_filter('json')
 def to_json(value):
     return json.dumps(value, separators=(',', ':'))
+
+@app.template_filter('datetime')
+def fmt_datetime(value, fmt, tz='US/Eastern'):
+    tz = timezone(tz)
+    value = value.replace(tzinfo=utc).astimezone(tz)
+    return value.strftime(fmt)
 
