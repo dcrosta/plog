@@ -6,7 +6,7 @@
     {% if start %}
     <h1>{{start|datetime(fmt)}}</h1>
     {% elif tag %}
-    <h1>Posts tagged "{{tag}}"</h1>
+    <h1>Posts about {{tag}}</h1>
     {% endif %}
     <div id="archive">
       {% for post in posts %}
