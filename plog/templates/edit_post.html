@@ -49,7 +49,7 @@
         $('#slug').attr('editable', 'false');
 
         var opts = {dateFormat: "yy-mm-dd hh:ii"};
-        if ($('#pubdate').val() == "") {
+        if (!$('#published').is(':checked')) {
           opts.value = "+0min";
         }
         $('#pubdate').datetime(opts);
