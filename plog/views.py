@@ -153,8 +153,6 @@ def permalink(post_id):
 @app.route('/post/<path:slug>')
 def post(slug):
     post = get_or_404(Post, slug=slug, published=True)
-    if not is_logged_in():
-        post.update(inc__views=1)
     return render_template(
         'post.html',
         post=post,

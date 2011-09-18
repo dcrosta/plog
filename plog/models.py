@@ -64,8 +64,6 @@ class Post(Document):
 
     comments = ListField(EmbeddedDocumentField(Comment))
 
-    views = IntField()
-
     _words = ListField(StringField())
 
     meta = {
