@@ -102,13 +102,16 @@ def full_archive():
 
 @app.route('/post/<int:year>/')
 def year_archive(year):
-    start = datetime(year=year, month=1, day=1)
-    end = datetime(year=year + 1, month=1, day=1)
+    start = datetime(year=year, month=1, day=1, tzinfo=eastern)
+    start = start.astimezone(utc).replace(tzinfo=None)
+    end = datetime(year=year + 1, month=1, day=1, tzinfo=eastern)
+    end = end.astimezone(utc).replace(tzinfo=None)
     return archive(start, end, 'Posts from %Y')
 
 @app.route('/post/<int:year>/<int:month>/')
 def month_archive(year, month):
-    start = datetime(year=year, month=month, day=1)
+    start = datetime(year=year, month=month, day=1, tzinfo=eastern)
+    start = start.astimezone(utc).replace(tzinfo=None)
     if month == 12:
         year += 1
         month = 0
@@ -117,7 +120,8 @@ def month_archive(year, month):
 
 @app.route('/post/<int:year>/<int:month>/<int:day>/')
 def day_archive(year, month, day):
-    start = datetime(year=year, month=month, day=day)
+    start = datetime(year=year, month=month, day=day, tzinfo=eastern)
+    start = start.astimezone(utc).replace(tzinfo=None)
     end = start + timedelta(days=1)
     return archive(start, end, 'Posts from %B %d, %Y')
 
@@ -125,7 +129,6 @@ def archive(start, end, fmt):
     posts = Post.objects(published=True).order_by('-pubdate')
     if start and end:
         posts.filter(pubdate__gte=start, pubdate__lt=end)
-    posts.only('pubdate', 'slug', 'title', 'tags')
     return render_template(
         'archive.html',
         posts=posts,
