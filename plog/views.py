@@ -5,8 +5,9 @@ from StringIO import StringIO
 import unicodedata
 
 import apesmit
-from flask import make_response, redirect, render_template, request, session, url_for
+from flask import abort, make_response, redirect, render_template, request, session, url_for
 from werkzeug.contrib.atom import AtomFeed
+from werkzeug.exceptions import NotFound, InternalServerError
 
 from plog import app
 from plog.models import *
@@ -139,6 +140,8 @@ def archive(start, end, fmt):
 
 @app.route('/tag/<tag>')
 def tag_archive(tag):
+    if not TagCloud.objects(tag=tag, count__gt=0).first():
+        return abort(404)
     posts = Post.objects(published=True, tags=tag).order_by('-pubdate')
     posts.only('pubdate', 'slug', 'title')
     return render_template(
@@ -349,5 +352,15 @@ def setversion(version):
     return response
 
 @app.errorhandler(404)
-def notfound():
-    pass
+@app.errorhandler(500)
+def notfound(error):
+    try:
+        cloud = TagCloud.get()
+    except:
+        cloud = None
+
+    return render_template(
+        'error.html',
+        error=error,
+        cloud=cloud,
+    )

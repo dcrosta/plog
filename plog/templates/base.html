@@ -23,7 +23,7 @@
 
     <div id="wrapper">
       <header id="header">
-        <h1><a href="/" title="Home" rel="prefetch">late<img src="{{url_for('static', filename='mug.png')}}" width="16" height="16"/>am</a></h1>
+        {% block header %}<h1><a href="/" title="Home" rel="prefetch">late<img src="{{url_for('static', filename='mug.png')}}" width="16" height="16"/>am</a></h1>{% endblock %}
       </header>
 
       <section id="main">

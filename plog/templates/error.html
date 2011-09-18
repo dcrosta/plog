@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% import "_macros.html" as macros with context %}
+
+{% if error.code == 404 %}
+{% set words = ['Not', 'found'] %}
+{% elif error.code == 500 %}
+{% set words = ['Server', 'error'] %}
+{% endif %}
+
+{% set message = ' '.join(words) %}
+
+{% block title %}{{message}} &laquo; {{super()}}{% endblock %}
+{% block header %}<h1><a href="/" title="Home" rel="prefetch">{{words[0]|lower}}<img src="{{url_for('static', filename='mug.png')}}" width="16" height="16"/>{{words[1]|lower}}</a></h1>{% endblock %}
+
+{% block content %}
+<article>
+  {% if error.code == 404 %}
+  <p>Hrm, can't find that page. Did you type the URL by hand? Maybe you made a mistake?</p>
+  <p>Oh, how rude of me, accusing you of doing something wrong. Sorry about that!</p>
+  {% elif error.code == 500 %}
+  <p>You broke it! Maybe!</p>
+  <p>It's also possible I did. I mean, I never break things, who said that?</p>
+  <p>The good news is, I already know about it. So don't worry, I'll have it fixed in a jiff!</p>
+  {% endif %}
+</article>
+{% endblock %}
