@@ -2,12 +2,16 @@
 
 {% import "_macros.html" as macros with context %}
 
+{% if start %}
+{% set title = 'Posts from ' + start|datetime(fmt) %}
+{% elif tag %}
+{% set title = 'Posts about ' + tag %}
+{% endif %}
+
+{% block title %}{{title}} &laquo; {{super()}}{% endblock %}
+
 {% block content %}
-    {% if start %}
-    <h1>{{start|datetime(fmt)}}</h1>
-    {% elif tag %}
-    <h1>Posts about {{tag}}</h1>
-    {% endif %}
+    <h1>{{title}}</h1>
     <div id="archive">
       {% for post in posts %}
       {{macros.article(post, short=True)}}

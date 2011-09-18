@@ -106,7 +106,7 @@ def year_archive(year):
     start = start.astimezone(utc).replace(tzinfo=None)
     end = datetime(year=year + 1, month=1, day=1, tzinfo=eastern)
     end = end.astimezone(utc).replace(tzinfo=None)
-    return archive(start, end, 'Posts from %Y')
+    return archive(start, end, '%Y')
 
 @app.route('/post/<int:year>/<int:month>/')
 def month_archive(year, month):
@@ -116,14 +116,14 @@ def month_archive(year, month):
         year += 1
         month = 0
     end = datetime(year=year, month=month + 1, day=1)
-    return archive(start, end, 'Posts from %B %Y')
+    return archive(start, end, '%B %Y')
 
 @app.route('/post/<int:year>/<int:month>/<int:day>/')
 def day_archive(year, month, day):
     start = datetime(year=year, month=month, day=day, tzinfo=eastern)
     start = start.astimezone(utc).replace(tzinfo=None)
     end = start + timedelta(days=1)
-    return archive(start, end, 'Posts from %B %d, %Y')
+    return archive(start, end, '%B %d, %Y')
 
 def archive(start, end, fmt):
     posts = Post.objects(published=True).order_by('-pubdate')
@@ -348,3 +348,6 @@ def setversion(version):
 
     return response
 
+@app.errorhandler(404)
+def notfound():
+    pass
