@@ -126,7 +126,7 @@ class PostForm(wtforms.Form):
     tags = CommaListField()
 
     pubdate = wtforms.DateTimeField(label='Date', format='%Y-%m-%d %H:%M')
-    published = wtforms.BooleanField(label='Published', default=True)
+    published = wtforms.BooleanField(label='Published', default=False)
     blurb = wtforms.TextAreaField(label='Blurb', validators=[validators.Required()])
     body = wtforms.TextAreaField(label='Body')
 
