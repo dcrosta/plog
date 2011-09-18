@@ -23,7 +23,6 @@ def mobile_redirect():
     ua = str(request.user_agent)
     if mobile.search(ua) or mobile_4.search(ua[:4]):
         if 'nomobile' not in request.cookies:
-            print (request.scheme, request.host, request.script_root, request.path, request.query_string)
             newurl = '%s://m.%s%s%s%s' % (
                 request.scheme,
                 request.host,
