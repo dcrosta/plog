@@ -85,5 +85,8 @@
       });
     </script>
     {% block scripts %}{% endblock %}
+    {% if not request.path.startswith('/admin') %}
+    {{config.get('TRACKER_CODE', '')|safe}}
+    {% endif %}
   </body>
 </html>
