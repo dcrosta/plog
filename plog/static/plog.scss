@@ -210,7 +210,7 @@ img.icon {
     h5 { @include header(0.65); display:inline-block; margin:0px 5px; }
     h6 { @include header(0.58); display:inline-block; margin:0px 5px; }
 
-    h1:first-child{ display:block; @include header(1.00); }
+    h1:first-child{ display:block; @include header(0.73); }
   }
 }
 
