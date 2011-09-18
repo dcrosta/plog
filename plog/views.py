@@ -329,3 +329,19 @@ def save_user():
     user.save()
     return redirect(url_for('dashboard'))
 
+@app.route('/version/<version>')
+def setversion(version):
+    response = redirect(request.referrer)
+
+    if version == 'desktop':
+        lifetime = timedelta(days=365 * 10)
+        response.set_cookie(
+            'nomobile', 'true',
+            max_age=lifetime.seconds + lifetime.days * 24 * 3600,
+            expires= datetime.utcnow() + lifetime,
+        )
+    elif 'nomobile' in request.cookies:
+        response.delete_cookie('nomobile')
+
+    return response
+

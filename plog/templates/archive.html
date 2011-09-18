@@ -10,7 +10,7 @@
     {% endif %}
     <div id="archive">
       {% for post in posts %}
-      {{macros.archive_article(post)}}
+      {{macros.article(post, short=True)}}
       {% else %}
       <p><em>No posts to show.</em></p>
       {% endfor %}

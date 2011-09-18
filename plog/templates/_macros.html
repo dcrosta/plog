@@ -35,25 +35,3 @@
     </article>
 {%- endmacro %}
 
-{% macro archive_article(post) -%}
-      <article>
-        <header>
-          <h1>
-            <time datetime="{{post.pubdate|datetime('%Y-%m-%dT%H:%M:%SZ', 'utc')}}">
-              <a href="{{url_for('year_archive', year=post.pubdate.year)}}">{{post.pubdate|datetime('%Y')}}</a> /
-              <a href="{{url_for('month_archive', year=post.pubdate.year, month=post.pubdate.month)}}">{{post.pubdate|datetime('%m')|nozero}}</a> /
-              <a href="{{url_for('day_archive', year=post.pubdate.year, month=post.pubdate.month, day=post.pubdate.day)}}">{{post.pubdate|datetime('%d')|nozero}}</a> /
-            </time>
-            <a rel="bookmark" href="{{url_for('post', slug=post.slug)}}">{{post.title}}</a>
-          </h1>
-        </header>
-        <p class="tags">
-          <img src="{{url_for('static', filename='tag.png')}}" width="16" height="16">
-          {% for tag in post.tags %}
-          <a href="{{url_for('tag_archive', tag=tag)}}">{{tag}}</a>{% if not loop.last %},{% endif %}
-          {% else %}
-          <em class="untagged">untagged</em>
-          {% endfor %}
-        </p>
-      </article>
-{%- endmacro %}

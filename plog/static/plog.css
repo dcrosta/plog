@@ -541,6 +541,8 @@ footer {
     color: #777; }
   footer a:focus, footer a:hover {
     color: #630; }
+  footer p {
+    margin-bottom: 10px; }
 
 /* admin */
 table.form {

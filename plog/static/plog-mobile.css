@@ -1,0 +1,306 @@
+body {
+  width: 500px;
+  margin: 0 auto;
+  padding: 10px 15px;
+  color: #111;
+  font: normal 15px/22px sans-serif;
+  background-color: #D4D1BF;
+  background: url("bg.png"); }
+
+a {
+  color: #111; }
+
+a:hover, a:focus {
+  color: #630; }
+
+#wrapper-1, #wrapper-2 {
+  display: none; }
+
+h1 {
+  font-size: 1.35em; }
+
+h2 {
+  font-size: 1.25em; }
+
+h3 {
+  font-size: 1.20em; }
+
+h4 {
+  font-size: 1.15em; }
+
+h5 {
+  font-size: 1.10em; }
+
+h6 {
+  font-size: 1.00em; }
+
+img.icon {
+  position: relative;
+  margin-right: 2px;
+  top: 2px; }
+
+#wrapper #main, #wrapper aside {
+  padding: 15px;
+  background-color: #F9F9F9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
+#wrapper aside {
+  margin-top: 20px; }
+#wrapper h1, #wrapper h2, #wrapper h3, #wrapper h4, #wrapper h5, #wrapper h6 {
+  margin: 1em 0em; }
+#wrapper > header {
+  font-size: 4em;
+  text-align: center; }
+  #wrapper > header h1 {
+    margin: 0.3em 0em; }
+    #wrapper > header h1 img {
+      margin: 0px 10px; }
+    #wrapper > header h1 a {
+      text-decoration: none; }
+#wrapper > * > section {
+  margin-top: 20px; }
+#wrapper > * > section:first-child {
+  margin-top: 0px; }
+#wrapper section h1:first-child {
+  margin-top: 10px; }
+#wrapper article section, #wrapper article p, #wrapper article pre {
+  margin-top: 10px; }
+#wrapper article p.more {
+  padding-bottom: 15px;
+  border-bottom: 1px dotted #aaa;
+  margin-bottom: 15px; }
+#wrapper article code {
+  font-size: 85%; }
+#wrapper article pre {
+  overflow-x: scroll; }
+  #wrapper article pre code {
+    /* Comment */
+    /* Error */
+    /* Keyword */
+    /* Operator */
+    /* Comment.Multiline */
+    /* Comment.Preproc */
+    /* Comment.Single */
+    /* Comment.Special */
+    /* Generic.Deleted */
+    /* Generic.Emph */
+    /* Generic.Error */
+    /* Generic.Heading */
+    /* Generic.Inserted */
+    /* Generic.Output */
+    /* Generic.Prompt */
+    /* Generic.Strong */
+    /* Generic.Subheading */
+    /* Generic.Traceback */
+    /* Keyword.Constant */
+    /* Keyword.Declaration */
+    /* Keyword.Namespace */
+    /* Keyword.Pseudo */
+    /* Keyword.Reserved */
+    /* Keyword.Type */
+    /* Literal.Number */
+    /* Literal.String */
+    /* Name.Attribute */
+    /* Name.Builtin */
+    /* Name.Class */
+    /* Name.Constant */
+    /* Name.Decorator */
+    /* Name.Entity */
+    /* Name.Exception */
+    /* Name.Function */
+    /* Name.Label */
+    /* Name.Namespace */
+    /* Name.Tag */
+    /* Name.Variable */
+    /* Operator.Word */
+    /* Text.Whitespace */
+    /* Literal.Number.Float */
+    /* Literal.Number.Hex */
+    /* Literal.Number.Integer */
+    /* Literal.Number.Oct */
+    /* Literal.String.Backtick */
+    /* Literal.String.Char */
+    /* Literal.String.Doc */
+    /* Literal.String.Double */
+    /* Literal.String.Escape */
+    /* Literal.String.Heredoc */
+    /* Literal.String.Interpol */
+    /* Literal.String.Other */
+    /* Literal.String.Regex */
+    /* Literal.String.Single */
+    /* Literal.String.Symbol */
+    /* Name.Builtin.Pseudo */
+    /* Name.Variable.Class */
+    /* Name.Variable.Global */
+    /* Name.Variable.Instance */
+    /* Literal.Number.Integer.Long */ }
+    #wrapper article pre code .hll {
+      background-color: #ffffcc; }
+    #wrapper article pre code .c {
+      color: #60a0b0;
+      font-style: italic; }
+    #wrapper article pre code .err {
+      border: 1px solid #FF0000; }
+    #wrapper article pre code .k {
+      color: #007020;
+      font-weight: bold; }
+    #wrapper article pre code .o {
+      color: #666666; }
+    #wrapper article pre code .cm {
+      color: #60a0b0;
+      font-style: italic; }
+    #wrapper article pre code .cp {
+      color: #007020; }
+    #wrapper article pre code .c1 {
+      color: #60a0b0;
+      font-style: italic; }
+    #wrapper article pre code .cs {
+      color: #60a0b0;
+      background-color: #fff0f0; }
+    #wrapper article pre code .gd {
+      color: #A00000; }
+    #wrapper article pre code .ge {
+      font-style: italic; }
+    #wrapper article pre code .gr {
+      color: #FF0000; }
+    #wrapper article pre code .gh {
+      color: #000080;
+      font-weight: bold; }
+    #wrapper article pre code .gi {
+      color: #00A000; }
+    #wrapper article pre code .go {
+      color: #808080; }
+    #wrapper article pre code .gp {
+      color: #c65d09;
+      font-weight: bold; }
+    #wrapper article pre code .gs {
+      font-weight: bold; }
+    #wrapper article pre code .gu {
+      color: #800080;
+      font-weight: bold; }
+    #wrapper article pre code .gt {
+      color: #0040D0; }
+    #wrapper article pre code .kc {
+      color: #007020;
+      font-weight: bold; }
+    #wrapper article pre code .kd {
+      color: #007020;
+      font-weight: bold; }
+    #wrapper article pre code .kn {
+      color: #007020;
+      font-weight: bold; }
+    #wrapper article pre code .kp {
+      color: #007020; }
+    #wrapper article pre code .kr {
+      color: #007020;
+      font-weight: bold; }
+    #wrapper article pre code .kt {
+      color: #902000; }
+    #wrapper article pre code .m {
+      color: #40a070; }
+    #wrapper article pre code .s {
+      color: #4070a0; }
+    #wrapper article pre code .na {
+      color: #4070a0; }
+    #wrapper article pre code .nb {
+      color: #007020; }
+    #wrapper article pre code .nc {
+      color: #0e84b5;
+      font-weight: bold; }
+    #wrapper article pre code .no {
+      color: #60add5; }
+    #wrapper article pre code .nd {
+      color: #555555;
+      font-weight: bold; }
+    #wrapper article pre code .ni {
+      color: #d55537;
+      font-weight: bold; }
+    #wrapper article pre code .ne {
+      color: #007020; }
+    #wrapper article pre code .nf {
+      color: #06287e; }
+    #wrapper article pre code .nl {
+      color: #002070;
+      font-weight: bold; }
+    #wrapper article pre code .nn {
+      color: #0e84b5;
+      font-weight: bold; }
+    #wrapper article pre code .nt {
+      color: #062873;
+      font-weight: bold; }
+    #wrapper article pre code .nv {
+      color: #bb60d5; }
+    #wrapper article pre code .ow {
+      color: #007020;
+      font-weight: bold; }
+    #wrapper article pre code .w {
+      color: #bbbbbb; }
+    #wrapper article pre code .mf {
+      color: #40a070; }
+    #wrapper article pre code .mh {
+      color: #40a070; }
+    #wrapper article pre code .mi {
+      color: #40a070; }
+    #wrapper article pre code .mo {
+      color: #40a070; }
+    #wrapper article pre code .sb {
+      color: #4070a0; }
+    #wrapper article pre code .sc {
+      color: #4070a0; }
+    #wrapper article pre code .sd {
+      color: #4070a0;
+      font-style: italic; }
+    #wrapper article pre code .s2 {
+      color: #4070a0; }
+    #wrapper article pre code .se {
+      color: #4070a0;
+      font-weight: bold; }
+    #wrapper article pre code .sh {
+      color: #4070a0; }
+    #wrapper article pre code .si {
+      color: #70a0d0;
+      font-style: italic; }
+    #wrapper article pre code .sx {
+      color: #c65d09; }
+    #wrapper article pre code .sr {
+      color: #235388; }
+    #wrapper article pre code .s1 {
+      color: #4070a0; }
+    #wrapper article pre code .ss {
+      color: #517918; }
+    #wrapper article pre code .bp {
+      color: #007020; }
+    #wrapper article pre code .vc {
+      color: #bb60d5; }
+    #wrapper article pre code .vg {
+      color: #bb60d5; }
+    #wrapper article pre code .vi {
+      color: #bb60d5; }
+    #wrapper article pre code .il {
+      color: #40a070; }
+#wrapper article header > h1 {
+  margin-top: 0px; }
+#wrapper article header time a {
+  color: #777; }
+#wrapper article header time a:focus, #wrapper article header time a:hover {
+  color: #323130; }
+#wrapper article header time:after {
+  content: " / "; }
+#wrapper #tagcloud h1, #wrapper #tagcloud h2, #wrapper #tagcloud h3, #wrapper #tagcloud h4, #wrapper #tagcloud h5, #wrapper #tagcloud h6 {
+  display: inline-block;
+  margin: 5px; }
+#wrapper #tagcloud h1:first-child {
+  display: block;
+  margin-bottom: 10px; }
+
+footer {
+  text-align: center;
+  margin-top: 15px;
+  color: #999; }
+  footer a {
+    color: #777; }
+  footer a:focus, footer a:hover {
+    color: #630; }
+  footer p {
+    margin-bottom: 10px; }
