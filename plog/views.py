@@ -56,7 +56,7 @@ def feed():
 @app.route('/sitemap.xml')
 def sitemap():
     sm = apesmit.Sitemap(changefreq='daily')
-    sm.add(url_for('index', _external=True, priority='1.0'))
+    sm.add(url_for('index', _external=True), priority='1.0')
 
     now = datetime.utcnow()
     for post in Post.objects(published=True):
