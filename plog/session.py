@@ -1,5 +1,7 @@
 __all__ = ('SessionMixin', 'MongoSessionStore')
 
+from datetime import datetime, timedelta
+
 from werkzeug.contrib.sessions import SessionStore
 
 from mongoengine import Document, DictField, StringField
@@ -9,7 +11,7 @@ class SessionMixin(object):
 
     @property
     def session_key(self):
-        return app.config.get('SESSION_COOKIE_NAME', '_plog_session')
+        return self.config.get('SESSION_COOKIE_NAME', '_plog_session')
 
     def open_session(self, request):
         sid = request.cookies.get(self.session_key, None)
@@ -21,16 +23,16 @@ class SessionMixin(object):
         if session.should_save:
             self.session_store.save(session)
 
-            lifetime = app.config.get('PERMANENT_SESSION_LIFETIME', timedelta(minutes=30))
+            lifetime = self.config.get('PERMANENT_SESSION_LIFETIME', timedelta(minutes=30))
             response.set_cookie(
                 self.session_key,
                 session.sid,
                 max_age=lifetime.seconds + lifetime.days * 24 * 3600,
                 expires= datetime.utcnow() + lifetime,
-                secure=app.config.get('SESSION_COOKIE_SECURE', False),
-                httponly=app.config.get('SESSION_COOKIE_HTTPONLY', False),
-                domain=app.config.get('SESSION_COOKIE_DOMAIN', None),
-                path=app.config.get('SESSION_COOKIE_PATH', '/'),
+                secure=self.config.get('SESSION_COOKIE_SECURE', False),
+                httponly=self.config.get('SESSION_COOKIE_HTTPONLY', False),
+                domain=self.config.get('SESSION_COOKIE_DOMAIN', None),
+                path=self.config.get('SESSION_COOKIE_PATH', '/'),
             )
         return response
 

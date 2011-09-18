@@ -10,7 +10,7 @@ from mongoengine import connect
 here = dirname(__file__)
 parent = abspath(join(dirname(__file__), '..'))
 
-class SessionFlask(Flask, SessionMixin):
+class SessionFlask(SessionMixin, Flask):
     pass
 
 app = SessionFlask('plog')
