@@ -296,8 +296,8 @@ def make_slug(title, utc_pubdate):
     pubdate = utc_pubdate.replace(tzinfo=utc).astimezone(eastern)
 
     title = unicodedata.normalize('NFKD', title).encode('ascii', 'ignore')
-    title = unicode(re.sub('[^\w\s-]', '', title).strip().lower())
-    title = re.sub('[\s]+', '-', title)
+    title = unicode(re.sub(r'[^\w\s\\/-]', '', title).strip().lower())
+    title = re.sub(r'[\s\\/-]+', '-', title)
 
     return '%4d/%02d/%02d/%s' % (pubdate.year, pubdate.month, pubdate.day, title)
 
