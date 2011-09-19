@@ -74,7 +74,10 @@ def sitemap():
 
     out = StringIO()
     sm.write(out)
-    return out.getvalue()
+
+    response = make_response(out.getvalue())
+    response.headers['Content-Type'] = 'application/xml; charset=UTF-8'
+    return response
 
 @app.route('/search')
 def search():
