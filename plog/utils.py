@@ -39,7 +39,7 @@ def set_mobile():
        and 'nomobile' not in request.cookies \
        and not request.path.startswith('/admin'):
         return {'is_mobile': True}
-    return {'is_mobile': True}
+    return {'is_mobile': False}
 
 def randstring(length=32):
     return ''.join(choice(letters + digits) for x in xrange(length))
