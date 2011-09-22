@@ -5,7 +5,7 @@ from StringIO import StringIO
 import unicodedata
 
 import apesmit
-from flask import abort, make_response, redirect, render_template, request, session, url_for
+from flask import abort, flash, make_response, redirect, render_template, request, session, url_for
 from werkzeug.contrib.atom import AtomFeed
 from werkzeug.exceptions import NotFound, InternalServerError
 
@@ -159,14 +159,57 @@ def permalink(post_id):
     post = get_or_404(Post, pk=post_id)
     return redirect(url_for('post', slug=post.slug))
 
-@app.route('/post/<path:slug>')
+@app.route('/post/<path:slug>', methods=['GET'])
 def post(slug):
     post = get_or_404(Post, slug=slug, published=True)
+    comment_count = sum(c.approved for c in post.comments)
+    comment_form = CommentForm()
     return render_template(
         'post.html',
         post=post,
         cloud=TagCloud.get(),
+        comment_form=comment_form,
+        comment_count=comment_count,
     )
+
+@app.route('/post/<path:slug>', methods=['POST'])
+def comment(slug):
+    post = get_or_404(Post, slug=slug, published=True)
+    comment_form = CommentForm(request.form)
+    if not comment_form.validate():
+        return render_template(
+            'post.html',
+            post=post,
+            cloud=TagCloud.get(),
+            comment_form=comment_form,
+        )
+
+    post.update(push__comments=Comment(
+        author=comment_form.author.data,
+        email=comment_form.email.data,
+        body=comment_form.body.data,
+        approved=False))
+
+    # commenter data might have changed
+    commenter = comment_form.commenter
+    if commenter is None:
+        commenter = Commenter()
+    if comment_form.author.data != commenter.author:
+        commenter.author = comment_form.author.data
+    if comment_form.email.data != commenter.email:
+        commenter.email = comment_form.email.data
+    commenter.save()
+
+    flash('success', 'Your comment will appear once approved.')
+    response = redirect(url_for('post', slug=slug))
+
+    lifetime = timedelta(days=3650)
+    response.set_cookie(
+        'plogcmt', commenter.cookie,
+        max_age=lifetime.seconds + lifetime.days * 24 * 3600,
+        expires=datetime.utcnow() + lifetime,
+        httponly=True)
+    return response
 
 @app.route('/admin/login', methods=['GET'])
 def login():
@@ -200,12 +243,15 @@ def dashboard():
     # moderation_queue = ...
     posts = Post.objects.order_by('-pubdate')
 
-    # TODO: finish this
-    comments = [
-    #    {'post': {'title': 'Test', 'slug': '2011/09/13/test'},
-    #     'author': {'full_name': 'Nice User', 'email': 'nice.user@gmail.com'},
-    #     'body': """<script>alert('evil!');</script>"""},
-    ]
+    comments = []
+    for post in posts:
+        for i, comment in enumerate(post.comments):
+            if not comment.approved:
+                comment.index = i
+                comment.post = post
+                comments.append(comment)
+
+    comments.sort(key=lambda c: c['when'], reverse=True)
 
     return render_template(
         'dashboard.html',
@@ -282,6 +328,17 @@ def save_post(slug):
 @login_required
 def delete_post(slug):
     Post.objects(slug=slug).delete()
+    return redirect(url_for('dashboard'))
+
+@app.route('/admin/post/<path:slug>/moderate/<int:index>', methods=['POST'])
+@login_required
+def moderate(slug, index):
+    post = get_or_404(Post, slug=slug)
+    if 'approve' in request.form:
+        post.comments[index].approved = True
+    else:
+        del post.comments[index]
+    post.save()
     return redirect(url_for('dashboard'))
 
 @app.route('/admin/getslug')

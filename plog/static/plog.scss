@@ -222,6 +222,35 @@ img.icon {
   width:$bodywidth;
   padding-right:17px;
   border-right:1px solid #EEE;
+
+  ul.messages {
+    margin:0px;
+    padding:0px;
+
+    li {
+      list-style:none;
+      margin-left:0px;
+      margin-bottom:8px;
+      padding:6px 6px 4px 30px;
+      border:1px solid #333;
+    }
+    li.success {
+      background:url('li_success.png') 8px 8px no-repeat;
+      background-color:#cfc;
+    }
+    li.warning {
+      background:url('li_warning.png') 8px 8px no-repeat;
+      background-color:#ffc;
+    }
+    li.error {
+      background:url('li_error.png') 8px 8px no-repeat;
+      background-color:#fcc;
+    }
+    li.info {
+      background:url('li_info.png') 8px 8px no-repeat;
+      background-color:#c0d9f0;
+    }
+  }
 }
 
 #after-articles {
@@ -246,6 +275,26 @@ img.icon {
       }
     }
 
+    #comments {
+      border-top:1px dotted #E5E5E5;
+
+      > h1 {
+        @include header(0.85);
+        font-style:italic;
+      }
+      .comment {
+        padding:10px;
+        border:1px solid #E5E5E5;
+
+        .by {
+          font-size:85%;
+          margin-top:0px;
+          font-style:italic;
+          padding-left:10px;
+        }
+      }
+    }
+
     .tags {
       .untagged {
         color:#777;
@@ -253,7 +302,7 @@ img.icon {
     }
 
     blockquote {
-      font:italic 1.1em/1.3em $sansserif;
+      font-style:italic;
       margin-bottom:15px;
       border-left:2px solid #ccc;
       padding-left:20px;
@@ -407,6 +456,15 @@ table.form {
   > tbody > tr > td {
     width:$bodywidth - 120px;
     padding-left:20px;
+
+    .description {
+      font-size:13px;
+      color:#777;
+      margin-top:8px;
+    }
+    .description:before {
+      content:"↑ ";
+    }
   }
 
 

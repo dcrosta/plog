@@ -1,6 +1,8 @@
-__all__ = ('get_or_404',)
+__all__ = ('get_or_404', 'randstring')
 
 from datetime import datetime, timedelta
+from random import choice
+from string import letters, digits
 import re
 
 from plog import app
@@ -31,12 +33,14 @@ def mobile_redirect():
                 request.query_string)
             return redirect(newurl)
 
-
 @app.context_processor
 def set_mobile():
     if request.host.startswith('m.') \
        and 'nomobile' not in request.cookies \
        and not request.path.startswith('/admin'):
         return {'is_mobile': True}
-    return {'is_mobile': False}
+    return {'is_mobile': True}
+
+def randstring(length=32):
+    return ''.join(choice(letters + digits) for x in xrange(length))
 

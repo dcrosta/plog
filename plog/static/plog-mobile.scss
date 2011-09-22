@@ -79,6 +79,26 @@ img.icon {
       margin-top:10px;
     }
 
+    #comments {
+      margin-top:25px;
+
+      > h1 {
+        font-size:1.15em;
+      }
+      .comment {
+        padding:0px 10px 10px 10px;
+        margin-bottom:10px;
+        border:1px solid #E5E5E5;
+
+        .by {
+          font-size:85%;
+          margin-top:0px;
+          font-style:italic;
+          padding-left:10px;
+        }
+      }
+    }
+
     p.more {
       padding-bottom:15px;
       border-bottom:1px dotted #aaa;
@@ -179,6 +199,55 @@ img.icon {
       display:block;
       margin-bottom:10px;
     }
+  }
+}
+
+table.form {
+  width:100%;
+
+  tbody {
+    td, th {
+      padding-bottom:6px;
+    }
+  }
+
+  tbody th {
+    text-align:right;
+    vertical-align:top;
+    padding-top:5px;
+    padding-right:20px;
+  }
+
+  tbody td {
+    .description {
+      font-size:13px;
+      color:#777;
+      margin-top:4px;
+      position:relative;
+    }
+    .description:before {
+      content:"↑ ";
+    }
+  }
+
+  input[type="text"], textarea {
+    padding:6px 4px;
+    margin:0;
+    background:none;
+    border:1px inset #EEE7E0;
+    width:97%;
+    margin:0 5px 0 0;
+  }
+
+  input[type="submit"] {
+    padding:4px 18px;
+    margin:0;
+    background:none;
+    border:1px solid #EEE7E0;
+  }
+
+  textarea {
+    height:150px;
   }
 }
 

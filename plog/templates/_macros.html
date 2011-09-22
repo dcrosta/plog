@@ -32,6 +32,19 @@
       {% if post.body and short %}
       <p class="more"><a href="{{url_for('post', slug=post.slug)}}">Read More...</a></p>
       {% endif %}
+
+      {% if not short %}
+      <section id="comments">
+        <h1>Your thoughts:</h1>
+        {% for comment in post.comments if comment.approved %}
+        <div class="comment">
+          {{comment.body|markdown|safe}}
+          <div class="by">&mdash; {{comment.author}}, {{comment.when|datetime('%Y-%m-%d %I%:%M %p')|lower}}</div>
+        </div>
+        {% endfor %}
+      </section>
+      {% endif %}
+
     </article>
 {%- endmacro %}
 

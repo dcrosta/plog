@@ -1,17 +1,19 @@
-__all__ = ('Comment', 'Post', 'PostForm', 'TagCloud')
+__all__ = ('Comment', 'Commenter', 'CommentForm', 'Post', 'PostForm', 'TagCloud')
 
 from bcrypt import gensalt, hashpw
-from datetime import date, datetime
+from datetime import datetime
 from math import ceil
 import re
 from pytz import timezone, utc
 
+from flask import request
 from mongoengine import *
 
 import wtforms
 from wtforms import validators
 
 from plog import app
+from plog.utils import randstring
 
 
 boundary = re.compile(r'\s')
@@ -45,9 +47,31 @@ class TagCloud(Document):
         return tags
 
 
+class Commenter(Document):
+    cookie = StringField(primary_key=True)
+    author = StringField()
+    email = StringField()
+
+    meta = {'allow_inheritance': False}
+
+    def __init__(self, *args, **kwargs):
+        super(Commenter, self).__init__(*args, **kwargs)
+        if self.cookie is None:
+            self.cookie = randstring()
+        self.when = datetime.utcnow()
+
 class Comment(EmbeddedDocument):
     author = StringField(required=True)
+    email = StringField(required=True)
     body = StringField(required=True)
+    approved = BooleanField()
+    when = DateTimeField()
+
+    meta = {'allow_inheritance': False}
+
+    def __init__(self, *args, **kwargs):
+        super(Comment, self).__init__(*args, **kwargs)
+        self.when = datetime.utcnow()
 
 class Post(Document):
     pubdate = DateTimeField(required=True)
@@ -133,4 +157,31 @@ class PostForm(wtforms.Form):
     @property
     def known_tags(self):
         return [t.tag for t in TagCloud.objects.order_by('tag').only('tag')]
+
+class CommentForm(wtforms.Form):
+    author = wtforms.TextField(
+        label='Your Name', validators=[validators.Length(min=5)])
+    email = wtforms.TextField(
+        label='Email',
+        validators=[validators.Required(), validators.Email()],
+        description='Never displayed')
+    body = wtforms.TextAreaField(
+        description='No HTML, but feel free to use <a href="http://daringfireball.net/projects/markdown/">Markdown</a>',
+        validators=[validators.Required()])
+
+    def __init__(self, formdata=None, *args, **kwargs):
+        super(CommentForm, self).__init__(formdata, *args, **kwargs)
+
+        self.commenter = None
+        if 'plogcmt' in request.cookies:
+            self.commenter = Commenter.objects(cookie=request.cookies['plogcmt']).first()
+            if self.commenter and formdata is None:
+                del self.email
+                self.author.data = self.commenter.author
+
+    def validate(self):
+        if self.commenter:
+            self.email.data = self.commenter.email
+
+        return super(CommentForm, self).validate()
 

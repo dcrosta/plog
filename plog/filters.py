@@ -7,7 +7,7 @@ from plog import app
 from markdown2 import markdown
 @app.template_filter('markdown')
 def domarkdown(value):
-    return markdown(value, extras=['code-color'])
+    return markdown(value, extras=['code-color', 'smarty-pants'])
 
 nozero_re = re.compile(r'(?:^|\s)0(\d)')
 @app.template_filter('nozero')
@@ -24,16 +24,6 @@ def nozero(value, strip=False):
 def no_none(value, default=''):
     if value is None:
         return default
-    return value
-
-@app.template_filter('pygments')
-def pygments(value):
-    # assume value is a markdown-formatted
-    # text area, and we're looking for the
-    # code blocks, a series of lines indented
-    # by 4 spaces
-
-    lines = value.split('\n')
     return value
 
 @app.template_filter('json')

@@ -66,6 +66,19 @@ img.icon {
   margin-top: 10px; }
 #wrapper article section, #wrapper article p, #wrapper article pre {
   margin-top: 10px; }
+#wrapper article #comments {
+  margin-top: 25px; }
+  #wrapper article #comments > h1 {
+    font-size: 1.15em; }
+  #wrapper article #comments .comment {
+    padding: 0px 10px 10px 10px;
+    margin-bottom: 10px;
+    border: 1px solid #E5E5E5; }
+    #wrapper article #comments .comment .by {
+      font-size: 85%;
+      margin-top: 0px;
+      font-style: italic;
+      padding-left: 10px; }
 #wrapper article p.more {
   padding-bottom: 15px;
   border-bottom: 1px dotted #aaa;
@@ -293,6 +306,37 @@ img.icon {
 #wrapper #tagcloud h1:first-child {
   display: block;
   margin-bottom: 10px; }
+
+table.form {
+  width: 100%; }
+  table.form tbody td, table.form tbody th {
+    padding-bottom: 6px; }
+  table.form tbody th {
+    text-align: right;
+    vertical-align: top;
+    padding-top: 5px;
+    padding-right: 20px; }
+  table.form tbody td .description {
+    font-size: 13px;
+    color: #777;
+    margin-top: 4px;
+    position: relative; }
+  table.form tbody td .description:before {
+    content: "↑ "; }
+  table.form input[type="text"], table.form textarea {
+    padding: 6px 4px;
+    margin: 0;
+    background: none;
+    border: 1px inset #EEE7E0;
+    width: 97%;
+    margin: 0 5px 0 0; }
+  table.form input[type="submit"] {
+    padding: 4px 18px;
+    margin: 0;
+    background: none;
+    border: 1px solid #EEE7E0; }
+  table.form textarea {
+    height: 150px; }
 
 footer {
   text-align: center;

@@ -269,6 +269,27 @@ img.icon {
   width: 590px;
   padding-right: 17px;
   border-right: 1px solid #EEE; }
+  #main ul.messages {
+    margin: 0px;
+    padding: 0px; }
+    #main ul.messages li {
+      list-style: none;
+      margin-left: 0px;
+      margin-bottom: 8px;
+      padding: 6px 6px 4px 30px;
+      border: 1px solid #333; }
+    #main ul.messages li.success {
+      background: url("li_success.png") 8px 8px no-repeat;
+      background-color: #cfc; }
+    #main ul.messages li.warning {
+      background: url("li_warning.png") 8px 8px no-repeat;
+      background-color: #ffc; }
+    #main ul.messages li.error {
+      background: url("li_error.png") 8px 8px no-repeat;
+      background-color: #fcc; }
+    #main ul.messages li.info {
+      background: url("li_info.png") 8px 8px no-repeat;
+      background-color: #c0d9f0; }
 
 #after-articles {
   padding-top: 30px; }
@@ -287,10 +308,27 @@ img.icon {
         color: #777; }
       #articles article header time a:focus, #articles article header time a:hover {
         color: #323130; }
+  #articles article #comments {
+    border-top: 1px dotted #E5E5E5; }
+    #articles article #comments > h1 {
+      font-family: "Istok Web", sans-serif;
+      font-weight: normal;
+      font-size: 22.1px;
+      line-height: 25.5px;
+      margin: 17px 0px 10.2px 0px;
+      font-style: italic; }
+    #articles article #comments .comment {
+      padding: 10px;
+      border: 1px solid #E5E5E5; }
+      #articles article #comments .comment .by {
+        font-size: 85%;
+        margin-top: 0px;
+        font-style: italic;
+        padding-left: 10px; }
   #articles article .tags .untagged {
     color: #777; }
   #articles article blockquote {
-    font: italic 1.1em/1.3em "Istok Web", sans-serif;
+    font-style: italic;
     margin-bottom: 15px;
     border-left: 2px solid #ccc;
     padding-left: 20px; }
@@ -558,6 +596,12 @@ table.form {
   table.form > tbody > tr > td {
     width: 470px;
     padding-left: 20px; }
+    table.form > tbody > tr > td .description {
+      font-size: 13px;
+      color: #777;
+      margin-top: 8px; }
+    table.form > tbody > tr > td .description:before {
+      content: "↑ "; }
   table.form input[type="text"], table.form input[type="password"], table.form textarea {
     font: normal 16px/22px "Istok Web", sans-serif;
     padding: 6px 4px;

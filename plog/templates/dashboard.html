@@ -61,18 +61,28 @@
         {% for comment in comments %}
         <tr>
           <td><a href="{{url_for('edit_post', slug=comment.post.slug)}}">{{comment.post.title}}</a></td>
-          <td>{{comment.author.full_name}}</td>
-          <td>{{comment.author.email}}</td>
+          <td>{{comment.author}}</td>
+          <td>{{comment.email}}</td>
         </tr>
         <tr>
           <td colspan="3">
-            {{comment.body|escape}}
+            <pre>{{comment.body|escape}}</pre>
           </td>
         </tr>
         <tr class="noborder">
-          <td><button id="{{comment.id}}" class="approve">Approve</button></td>
-          <td class="ajax"></td>
-          <td><button id="{{comment.id}}" class="reject">Reject</button></td>
+          <td>
+            <form class="moderate" action="{{url_for('moderate', slug=comment.post.slug, index=comment.index)}}" method="post">
+              <input type="hidden" name="csrf" value="{{session.csrf}}"/>
+              <input type="submit" name="approve" value="Approve"/>
+            </form>
+          </td>
+          <td></td>
+          <td>
+            <form class="moderate" action="{{url_for('moderate', slug=comment.post.slug, index=comment.index)}}" method="post">
+              <input type="hidden" name="csrf" value="{{session.csrf}}"/>
+              <input type="submit" name="reject" value="Reject"/>
+            </form>
+          </td>
         </tr>
         {% else %}
         <tr>

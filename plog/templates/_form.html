@@ -2,8 +2,10 @@
   <table class="form">
     <tbody>
       {% for field in form %}
-      <tr>
-        <th>{{field.label}}</th>
+      <tr class="{{field.type}}">
+        <th>
+          {{field.label}}
+        </th>
         <td id="td-{{field.name}}">
           {{field}}
           {% if field.errors %}
@@ -12,6 +14,8 @@
             <li>{{error}}</li>
             {% endfor %}
           </ul>
+          {% elif field.description %}
+          <div class="description">{{field.description|safe}}</div>
           {% endif %}
         </td>
       </tr>
@@ -34,5 +38,5 @@
       </tr>
     </tbody>
   </table>
-  {{csrf_token}}
+  <input type="hidden" name="csrf" value="{{session.csrf}}"/>
 </form>

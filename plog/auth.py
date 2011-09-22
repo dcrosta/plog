@@ -6,11 +6,12 @@ from urllib import urlencode, quote
 
 from mongoengine import *
 
-from flask import redirect, request, session, url_for
+from flask import abort, g, redirect, request, session, url_for
 import wtforms
 from wtforms import validators
 
 from plog import app, db
+from plog.utils import randstring
 
 
 class User(Document):
@@ -86,7 +87,20 @@ class EditUserForm(wtforms.Form):
 
 
 
-# @app.before_request
-# def set_csrf():
-#     pass
+@app.before_request
+def csrf_dance():
+    def newcsrf():
+        mycsrf = randstring()
+        session['csrf'] = mycsrf
+
+    if 'csrf' not in session:
+        newcsrf()
+
+    if request.method not in ('HEAD', 'GET'):
+        if 'csrf' not in request.form or 'csrf' not in session:
+            newcsrf()
+            abort(403)
+        if request.form['csrf'] != session['csrf']:
+            newcsrf()
+            abort(403)
 
