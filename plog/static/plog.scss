@@ -275,6 +275,18 @@ img.icon {
       }
     }
 
+
+    section {
+      p > img:first-child {
+        position:relative;
+        margin-left:5%;
+        max-width:85%;
+        background:white;
+        padding:10px;
+        border:1px solid #999;
+      }
+    }
+
     #comments {
       border-top:1px dotted #E5E5E5;
 
