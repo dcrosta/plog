@@ -21,6 +21,7 @@ class PreCodeFinder(HTMLParser):
     def reset(self):
         HTMLParser.reset(self)
         self.stack = []
+        self.data = []
         self.out = []
 
     def close(self):
@@ -46,24 +47,35 @@ class PreCodeFinder(HTMLParser):
 
     def handle_data(self, data):
         if self.stack == ['pre', 'code']:
-            lines = data.split('\n')
-            if ':::' in lines[0]:
-                firstline, lines = lines[0], lines[1:]
-                lang = firstline.strip()[3:].strip()
-                lexer = get_lexer_by_name(lang)
-                self.out.append(highlight('\n'.join(lines), lexer, PlainHtmlFormatter()))
-            else:
-                self.out.append(data)
+            self.data.append(data)
         else:
             self.out.append(data)
 
     def handle_endtag(self, tag):
+        if self.data:
+            if ':::' in self.data[0]:
+                # parts of self.data will have \n in them
+                data = ''.join(self.data)
+                lines = data.split('\n')
+                firstline, lines = lines[0], lines[1:]
+                lang = firstline.strip()[3:].strip()
+                lexer = get_lexer_by_name(lang)
+                self.out.append(highlight('\n'.join(lines), lexer, PlainHtmlFormatter(nowrap=True)))
+            else:
+                self.out.append('\n'.join(data))
+            self.data = []
         if self.stack and tag == self.stack[-1]:
             self.stack.pop(-1)
         self.out.append('</%s>' % tag)
 
     def handle_entityref(self, name):
-        self.out.append('&%s;' % name)
+        if self.stack == ['pre', 'code']:
+            if name == "quot":
+                self.data.append('"')
+            else:
+                self.data.append('&%s;' % name)
+        else:
+            self.out.append('&%s;' % name)
 
 def markup(text):
     html = markdown(text,  smartypants=True)
