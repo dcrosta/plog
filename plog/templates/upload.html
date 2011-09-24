@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+{% include "_admin-nav.html" %}
+{% endblock %}
+
+{% block content %}
+
+    {% with submitlabel="Save", formid="upload" %}
+    {% include "_form.html" with context %}
+    {% endwith %}
+{% endblock %}
+
+{% block styles %}
+<style type="text/css">
+  .FieldList li {
+    list-style-type:none;
+    margin-bottom:20px;
+  }
+  .FieldList li table {
+    width:100%;
+  }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+</script>
+{% endblock %}
+
