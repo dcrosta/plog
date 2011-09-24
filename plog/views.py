@@ -180,6 +180,9 @@ def serve(filename):
     response.content_length = fileobj.length
     response.last_modified = fileobj.upload_date
     response.set_etag(fileobj.md5)
+    response.cache_control.max_age = 31536000
+    response.cache_control.s_max_age = 31536000
+    response.cache_control.public = True
     response.make_conditional(request)
     return response
 
