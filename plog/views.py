@@ -5,17 +5,20 @@ from StringIO import StringIO
 import unicodedata
 
 import apesmit
-from flask import abort, flash, make_response, redirect, render_template, request, session, url_for
+from flask import abort, flash, make_response, redirect, render_template, request, send_file, session, url_for
+from gridfs import GridFS, NoFile
 from werkzeug.contrib.atom import AtomFeed
 from werkzeug.exceptions import NotFound, InternalServerError
+from werkzeug.wsgi import wrap_file
 
-from plog import app
+from plog import app, db
 from plog.models import *
 from plog.auth import *
 from plog.filters import domarkdown
 from plog.utils import *
 
 eastern = timezone('US/Eastern')
+uploads = GridFS(db)
 
 @app.route('/')
 def index():
@@ -158,6 +161,27 @@ def tag_archive(tag):
 def permalink(post_id):
     post = get_or_404(Post, pk=post_id)
     return redirect(url_for('post', slug=post.slug))
+
+@app.route('/uploads/<path:filename>')
+def serve(filename):
+    try:
+        fileobj = uploads.get_last_version(filename=filename)
+    except:
+        # no such file
+        abort(404)
+
+    # mostly copied from flask/helpers.py, with
+    # modifications for GridFS
+    data = wrap_file(request.environ, fileobj, buffer_size=1024*256)
+    response = app.response_class(
+        data,
+        mimetype=fileobj.content_type,
+        direct_passthrough=True)
+    response.content_length = fileobj.length
+    response.last_modified = fileobj.upload_date
+    response.set_etag(fileobj.md5)
+    response.make_conditional(request)
+    return response
 
 @app.route('/post/<path:slug>', methods=['GET'])
 def post(slug):
@@ -321,6 +345,41 @@ def save_post(slug):
         for tag in post.tags:
             TagCloud.objects(tag=tag).update(
                 inc__count=1, set__updated=datetime.utcnow(), upsert=True)
+
+    images = form.images_to_add()
+    if images:
+        return redirect(url_for('add_images', slug=post.slug, files=','.join(images)))
+
+    return redirect(url_for('dashboard'))
+
+@app.route('/admin/post/<path:slug>/uploads', methods=['GET'])
+def add_images(slug):
+    post = get_or_404(Post, slug=slug)
+    images = request.args.get('files').split(',')
+
+    form = UploadsForm(images=images)
+    return render_template(
+        'upload.html',
+        form=form,
+    )
+
+@app.route('/admin/post/<path:slug>/uploads', methods=['POST'])
+def save_images(slug):
+    post = get_or_404(Post, slug=slug)
+    images = request.args.get('files').split(',')
+
+    form = UploadsForm(images=images, formdata=request.form)
+    if form.validate():
+        for upload in form.uploads:
+            filename = upload.filename.data
+            fieldname = upload.file.name
+            if fieldname in request.files:
+                fileobj = request.files[fieldname]
+                uploads.put(
+                    fileobj.stream,
+                    filename=filename,
+                    content_type=fileobj.mimetype
+                )
 
     return redirect(url_for('dashboard'))
 

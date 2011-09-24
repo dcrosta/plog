@@ -1,4 +1,4 @@
-__all__ = ('Comment', 'Commenter', 'CommentForm', 'Post', 'PostForm', 'TagCloud')
+__all__ = ('Comment', 'Commenter', 'CommentForm', 'Post', 'PostForm', 'TagCloud', 'UploadsForm')
 
 from bcrypt import gensalt, hashpw
 from datetime import datetime
@@ -7,14 +7,16 @@ import re
 from pytz import timezone, utc
 
 from flask import request
+from gridfs import GridFS
 from mongoengine import *
 
 import wtforms
 from wtforms import validators
 
-from plog import app
+from plog import app, db
 from plog.utils import randstring
 
+uploads = GridFS(db)
 
 boundary = re.compile(r'\s')
 nopunc = re.compile(r'[^a-z0-9]')
@@ -157,6 +159,36 @@ class PostForm(wtforms.Form):
     @property
     def known_tags(self):
         return [t.tag for t in TagCloud.objects.order_by('tag').only('tag')]
+
+    def images_to_add(self):
+        newuploads = re.findall(r'\[[^\]]+\]\(([^\)]+)\)', self.blurb.data)
+        newuploads.extend(re.findall(r'\[[^\]]+\]\(([^\)]+)\)', self.body.data))
+
+        newuploads = [u[len('/uploads/'):] for u in newuploads if u.startswith('/uploads/')]
+
+        return set(newuploads) - set(uploads.list())
+
+class UploadForm(wtforms.Form):
+    filename = wtforms.HiddenField()
+    file = wtforms.FileField()
+
+class UploadsForm(wtforms.Form):
+    enctype = ' enctype="multipart/form-data"'
+    uploads = wtforms.FieldList(wtforms.FormField(UploadForm))
+
+    def __init__(self, images=None, *args, **kwargs):
+        super(UploadsForm, self).__init__(*args, **kwargs)
+
+        if not kwargs.get('formdata'):
+            for image in images or []:
+                self.uploads.append_entry({'filename': image})
+
+        for filename, field in zip(images, self.uploads):
+            field.label = filename
+            field.file.label = ''
+
+
+
 
 class CommentForm(wtforms.Form):
     author = wtforms.TextField(

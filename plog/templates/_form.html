@@ -1,4 +1,4 @@
-<form {% if formid %}id="{{formid}}" {% endif %}method="post" action="{{form.action}}">
+<form {% if formid %}id="{{formid}}" {% endif %}method="post" action="{{form.action}}" {{form.enctype|safe}}>
   <table class="form">
     <tbody>
       {% for field in form %}
