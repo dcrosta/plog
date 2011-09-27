@@ -62,7 +62,7 @@ class PreCodeFinder(HTMLParser):
                 lexer = get_lexer_by_name(lang)
                 self.out.append(highlight('\n'.join(lines), lexer, PlainHtmlFormatter(nowrap=True)))
             else:
-                self.out.append('\n'.join(data))
+                self.out.append('\n'.join(self.data))
             self.data = []
         if self.stack and tag == self.stack[-1]:
             self.stack.pop(-1)
