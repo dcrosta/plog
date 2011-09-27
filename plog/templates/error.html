@@ -4,7 +4,8 @@
 
 {% if error.code == 404 %}
 {% set words = ['Not', 'found'] %}
-{% elif error.code == 500 %}
+{#{% elif error.code == 500 %}#}
+{% else %}
 {% set words = ['Server', 'error'] %}
 {% endif %}
 
@@ -18,7 +19,8 @@
   {% if error.code == 404 %}
   <p>Hrm, can't find that page. Did you type the URL by hand? Maybe you made a mistake?</p>
   <p>Oh, how rude of me, accusing you of doing something wrong. Sorry about that!</p>
-  {% elif error.code == 500 %}
+  {#{% elif error.code == 500 %}#}
+  {% else %}
   <p>You broke it! Maybe!</p>
   <p>It's also possible I did. I mean, I never break things, who said that?</p>
   <p>The good news is, I already know about it. So don't worry, I'll have it fixed in a jiff!</p>
