@@ -326,12 +326,15 @@ img.icon {
       font-style: italic; }
     #articles article #comments .comment {
       padding: 10px;
-      border: 1px solid #E5E5E5; }
+      border: 1px solid #E5E5E5;
+      border-bottom: none; }
       #articles article #comments .comment .by {
         font-size: 85%;
         margin-top: 0px;
         font-style: italic;
         padding-left: 10px; }
+    #articles article #comments .comment.first {
+      border-top: 1px solid #E5E5E5; }
   #articles article .tags .untagged {
     color: #777; }
   #articles article blockquote {

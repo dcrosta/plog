@@ -89,6 +89,7 @@ img.icon {
         padding:0px 10px 10px 10px;
         margin-bottom:10px;
         border:1px solid #E5E5E5;
+        border-bottom:none;
 
         .by {
           font-size:85%;
@@ -96,6 +97,9 @@ img.icon {
           font-style:italic;
           padding-left:10px;
         }
+      }
+      .comment.first {
+        border-top:1px solid #E5E5E5;
       }
     }
 

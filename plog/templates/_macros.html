@@ -37,7 +37,7 @@
       <section id="comments">
         <h1>Your thoughts:</h1>
         {% for comment in post.comments if comment.approved %}
-        <div class="comment">
+        <div class="comment{% if loop.first %} first{% endif %}">
           {{comment.body|markdown|safe}}
           <div class="by">&mdash; {{comment.author}}, {{comment.when|datetime('%Y-%m-%d %I%:%M %p')|lower}}</div>
         </div>

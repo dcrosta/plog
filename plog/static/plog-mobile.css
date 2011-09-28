@@ -73,12 +73,15 @@ img.icon {
   #wrapper article #comments .comment {
     padding: 0px 10px 10px 10px;
     margin-bottom: 10px;
-    border: 1px solid #E5E5E5; }
+    border: 1px solid #E5E5E5;
+    border-bottom: none; }
     #wrapper article #comments .comment .by {
       font-size: 85%;
       margin-top: 0px;
       font-style: italic;
       padding-left: 10px; }
+  #wrapper article #comments .comment.first {
+    border-top: 1px solid #E5E5E5; }
 #wrapper article p.more {
   padding-bottom: 15px;
   border-bottom: 1px dotted #aaa;
