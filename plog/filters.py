@@ -33,6 +33,8 @@ def to_json(value):
 @app.template_filter('datetime')
 def fmt_datetime(value, fmt, tz='US/Eastern'):
     tz = timezone(tz)
-    value = value.replace(tzinfo=utc).astimezone(tz)
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=utc)
+    value = value.astimezone(tz)
     return value.strftime(fmt)
 

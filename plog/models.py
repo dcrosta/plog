@@ -73,7 +73,8 @@ class Comment(EmbeddedDocument):
 
     def __init__(self, *args, **kwargs):
         super(Comment, self).__init__(*args, **kwargs)
-        self.when = datetime.utcnow()
+        if self.when is None:
+            self.when = datetime.utcnow()
 
 class Post(Document):
     pubdate = DateTimeField(required=True)
