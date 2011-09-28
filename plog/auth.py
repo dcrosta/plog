@@ -1,6 +1,7 @@
 __all__ = ('User', 'is_logged_in', 'login_required', 'LoginForm', 'EditUserForm')
 
 from bcrypt import gensalt, hashpw
+from datetime import datetime, timedelta
 from functools import wraps
 from urllib import urlencode, quote
 
@@ -88,19 +89,33 @@ class EditUserForm(wtforms.Form):
 
 
 @app.before_request
-def csrf_dance():
-    def newcsrf():
-        mycsrf = randstring()
-        session['csrf'] = mycsrf
-
-    if 'csrf' not in session:
-        newcsrf()
+def check_csrf():
+    if 'csrf' not in request.cookies:
+        g.csrf = randstring()
+    else:
+        g.csrf = request.cookies['csrf']
 
     if request.method not in ('HEAD', 'GET'):
-        if 'csrf' not in request.form or 'csrf' not in session:
-            newcsrf()
+        if 'csrf' not in request.form or 'csrf' not in request.cookies:
+            g.csrf = randstring()
             abort(403)
-        if request.form['csrf'] != session['csrf']:
-            newcsrf()
+        if request.form['csrf'] != request.cookies['csrf']:
+            g.csrf = randstring()
             abort(403)
+
+@app.after_request
+def set_csrf(response):
+    if hasattr(g, 'csrf'):
+        lifetime = timedelta(days=3650)
+        response.set_cookie(
+            'csrf',
+            g.csrf,
+            max_age=lifetime.seconds + lifetime.days * 24 * 3600,
+            expires= datetime.utcnow() + lifetime,
+            secure=False,
+            httponly=True,
+            domain=app.config.get('SESSION_COOKIE_DOMAIN', None),
+            path=app.config.get('SESSION_COOKIE_PATH', '/'),
+        )
+    return response
 
