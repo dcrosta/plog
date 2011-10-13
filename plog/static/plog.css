@@ -663,6 +663,8 @@ table.dashboard {
     text-align: left; }
   table.dashboard td:first-child {
     white-space: nowrap; }
+  table.dashboard.comments td:first-child {
+    white-space: normal; }
   table.dashboard .noborder td {
     border: none; }
   table.dashboard .noborder td:first-child {

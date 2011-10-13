@@ -565,6 +565,10 @@ table.dashboard {
     white-space:nowrap;
   }
 
+  &.comments td:first-child {
+    white-space:normal;
+  }
+
   .noborder {
     td {
       border:none;
