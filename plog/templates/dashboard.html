@@ -79,7 +79,7 @@
           <td></td>
           <td>
             <form class="moderate" action="{{url_for('moderate', slug=comment.post.slug, index=comment.index)}}" method="post">
-              <input type="hidden" name="csrf" value="{{session.csrf}}"/>
+              <input type="hidden" name="csrf" value="{{g.csrf}}"/>
               <input type="submit" name="reject" value="Reject"/>
             </form>
           </td>
