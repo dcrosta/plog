@@ -1,5 +1,5 @@
-$sansserif:"Istok Web", sans-serif;
-/* $serif:"Georiga", serif; */
+$heading:"Istok Web", sans-serif;
+$sansserif:Helvetica, sans-serif;
 $monospace:"Menlo", "Monaco", monospace;
 
 $totalwidth:1000px;
@@ -36,7 +36,7 @@ a:hover, a:focus {
 }
 
 @mixin header($relsize) {
-  font-family:$sansserif;
+  font-family:$heading;
   font-weight:normal;
   font-size:26px * $relsize;
   line-height:30px * $relsize;
@@ -122,7 +122,7 @@ img.icon {
     font-weight:normal;
     font-size:80px;
     line-height:1.2em;
-    font-family:$sansserif;
+    font-family:$heading;
 
     a:hover, a:focus {
       text-decoration:none;
@@ -180,7 +180,7 @@ img.icon {
     width:$sidebarwidth - 18px;
 
     #search-input, #search-button {
-      font:normal 16px/22px $sansserif;
+      font:normal 16px/22px $heading;
       display:block;
       float:left;
       padding:6px 4px;
@@ -265,7 +265,7 @@ img.icon {
 
     header {
       color:#989592;
-      font:normal 30px/40px $sansserif;
+      font:normal 30px/40px $heading;
       margin-bottom:15px;
 
       time {
@@ -485,7 +485,7 @@ table.form {
 
 
   input[type="text"], input[type="password"], textarea {
-    font:normal 16px/22px $sansserif;
+    font:normal 16px/22px $heading;
     padding:6px 4px;
     margin:0;
     background:none;
@@ -495,7 +495,7 @@ table.form {
   }
 
   input[type="submit"] {
-    font:normal 16px/22px $sansserif;
+    font:normal 16px/22px $heading;
     padding:4px 18px;
     margin:0;
     background:none;
