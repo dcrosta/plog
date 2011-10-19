@@ -192,8 +192,7 @@ class UploadsForm(wtforms.Form):
 
 
 class CommentForm(wtforms.Form):
-    author = wtforms.TextField(
-        label='Your Name', validators=[validators.Length(min=5)])
+    author = wtforms.TextField(label='Your Name')
     email = wtforms.TextField(
         label='Email',
         validators=[validators.Required(), validators.Email()],
