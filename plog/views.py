@@ -481,8 +481,11 @@ def notfound(error):
     except:
         cloud = None
 
-    return render_template(
+    errpage = render_template(
         'error.html',
         error=error,
         cloud=cloud,
     )
+
+    return errpage, error.code
+
