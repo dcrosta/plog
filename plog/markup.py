@@ -70,8 +70,12 @@ class PreCodeFinder(HTMLParser):
 
     def handle_entityref(self, name):
         if self.stack == ['pre', 'code']:
-            if name == "quot":
+            if name == 'quot':
                 self.data.append('"')
+            elif name == 'gt':
+                self.data.append('>')
+            elif name == 'lt':
+                self.data.append('<')
             else:
                 self.data.append('&%s;' % name)
         else:
