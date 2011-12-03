@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+ <url>
+  <loc>{{root_url}}</loc>
+  <changefreq>daily</changefreq>
+  <priority>1.0</priority>
+ </url>
+ {% for post in posts %}
+ {%- set weeksago = min(3, ((now - post.updated).days / 7)) -%}
+ <url>
+  <loc>{{url_for('post', slug=post.slug, _external=True)}}</loc>
+  <lastmod>{{post.updated.strftime('%Y-%m-%dT%H:%M:%SZ')}}</lastmod>
+  <changefreq>daily</changefreq>
+  <priority>{{'%2.1f'|format((0.7 + (3 - weeksago) / 10))}}</priority>
+ </url>
+ {%- endfor %}
+ {%- for tag in tags %}
+ <url>
+  <loc>{{url_for('tag_archive', tag=tag.tag, _external=True)}}</loc>
+  <lastmod>{{tag.updated.strftime('%Y-%m-%dT%H:%M:%SZ')}}</lastmod>
+  <changefreq>daily</changefreq>
+  <priority>{{'%2.1f'|format(0.5 + (6 - tag.bucket) / 10.0)}}</priority>
+ </url>
+ {%- endfor %}
+</urlset>

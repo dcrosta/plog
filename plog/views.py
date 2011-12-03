@@ -56,26 +56,16 @@ def feed():
 
 @app.route('/sitemap.xml')
 def sitemap():
-    sm = apesmit.Sitemap(changefreq='daily')
-    sm.add(url_for('index', _external=True), priority='1.0')
+    sitemap = render_template(
+        'sitemap.xml',
+        root_url=url_for('index', _external=True),
+        posts=Post.objects(published=True),
+        tags=TagCloud.get(),
+        now=datetime.utcnow(),
+        min=min,
+    )
 
-    now = datetime.utcnow()
-    for post in Post.objects(published=True):
-        weeksago = min(3, (now - post.updated).days / 7)
-        sm.add(url_for('post', slug=post.slug, _external=True),
-               priority=str(0.7 + (3 - weeksago) / 10.0),
-               lastmod=post.updated.strftime('%Y-%m-%dT%H:%M:%SZ'))
-
-    for tag in TagCloud.get():
-        priority = (6 - tag.bucket) / 10.0
-        sm.add(url_for('tag_archive', tag=tag.tag, _external=True),
-               priority=str(0.5 + priority),
-               lastmod=tag.updated.strftime('%Y-%m-%dT%H:%M:%SZ'))
-
-    out = StringIO()
-    sm.write(out)
-
-    response = make_response(out.getvalue())
+    response = make_response(sitemap)
     response.headers['Content-Type'] = 'application/xml; charset=UTF-8'
     return response
 

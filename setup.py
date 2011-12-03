@@ -5,7 +5,6 @@ README = file(join(dirname(__file__), 'README.md')).read()
 
 # use pip install -r requirements.txt instead
 requires = [
-    'apesmit',
     'cMarkdown',
     'flask',
     'mongoengine',
@@ -38,13 +37,12 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    dependency_links=[
-        'https://github.com/sbook/flask-mongoengine/tarball/master#egg=Flask-MongoEngine',
-        'http://www.florian-diesch.de/software/apesmit/dist/apesmit-0.01.tar.gz',
-    ],
     entry_points={
         'pygments.lexers': [
             'keystone = plog.markup:KeystoneLexer',
+        ],
+        'console_scripts': [
+            'plog-admin = plog.scripts:admin',
         ],
     },
 )
