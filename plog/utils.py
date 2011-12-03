@@ -1,6 +1,5 @@
 __all__ = ('get_or_404', 'randstring')
 
-from datetime import datetime, timedelta
 from random import choice
 from string import letters, digits
 import re

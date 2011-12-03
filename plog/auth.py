@@ -11,7 +11,7 @@ from flask import abort, g, redirect, request, session, url_for
 import wtforms
 from wtforms import validators
 
-from plog import app, db
+from plog import app
 from plog.utils import randstring
 
 

@@ -1,8 +1,6 @@
 __all__ = ('Comment', 'Commenter', 'CommentForm', 'Post', 'PostForm', 'TagCloud', 'UploadsForm')
 
-from bcrypt import gensalt, hashpw
 from datetime import datetime
-from math import ceil
 import re
 from pytz import timezone, utc
 

@@ -1,14 +1,11 @@
 from datetime import datetime, timedelta
 from pytz import timezone, utc
 import re
-from StringIO import StringIO
 import unicodedata
 
-import apesmit
-from flask import abort, flash, make_response, redirect, render_template, request, send_file, session, url_for
-from gridfs import GridFS, NoFile
+from flask import abort, flash, make_response, redirect, render_template, request, session, url_for
+from gridfs import GridFS
 from werkzeug.contrib.atom import AtomFeed
-from werkzeug.exceptions import NotFound, InternalServerError
 from werkzeug.wsgi import wrap_file
 
 from plog import app, db
@@ -357,7 +354,7 @@ def save_post(slug):
 
 @app.route('/admin/post/<path:slug>/uploads', methods=['GET'])
 def add_images(slug):
-    post = get_or_404(Post, slug=slug)
+    get_or_404(Post, slug=slug)
     images = request.args.get('files').split(',')
 
     form = UploadsForm(images=images)
@@ -368,7 +365,7 @@ def add_images(slug):
 
 @app.route('/admin/post/<path:slug>/uploads', methods=['POST'])
 def save_images(slug):
-    post = get_or_404(Post, slug=slug)
+    get_or_404(Post, slug=slug)
     images = request.args.get('files').split(',')
 
     form = UploadsForm(images=images, formdata=request.form)
