@@ -109,7 +109,7 @@ class Post(Document):
         if self.pubdate is not None and self.pubdate.tzinfo is None:
             self.pubdate = self.pubdate.replace(tzinfo=utc).astimezone(site_tz)
 
-    def save(self):
+    def save(self, set_updated=True):
         words = set(boundary.split(self.title.lower()))
         words.update(boundary.split(self.blurb.lower()))
         words.update(boundary.split(self.body.lower()))
@@ -126,7 +126,8 @@ class Post(Document):
             self.pubdate = site_tz.localize(self.pubdate)
         self.pubdate = self.pubdate.astimezone(utc).replace(tzinfo=None)
 
-        self.updated = datetime.utcnow()
+        if set_updated:
+            self.updated = datetime.utcnow()
         super(Post, self).save()
 
 class CommaListField(wtforms.TextField):

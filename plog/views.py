@@ -397,7 +397,7 @@ def moderate(slug, index):
         post.comments[index].approved = True
     else:
         del post.comments[index]
-    post.save()
+    post.save(set_updated=False)
     return redirect(url_for('dashboard'))
 
 @app.route('/admin/getslug')
