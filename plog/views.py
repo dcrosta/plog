@@ -28,8 +28,12 @@ def index():
         cloud=TagCloud.get(),
     )
 
-@app.route('/feed')
-def feed():
+@app.route('/tag/<tag>/feed')
+@app.route('/feed', defaults={'tag': None})
+def feed(tag):
+    if tag and not TagCloud.objects(tag=tag, count__gt=0).first():
+        return abort(404)
+
     feed = AtomFeed(
         title='late.am',
         feed_url=url_for('feed', _external=True),
@@ -39,6 +43,8 @@ def feed():
     )
 
     posts = Post.objects(published=True).order_by('-pubdate')
+    if tag:
+        posts.filter(tags=tag)
     for post in posts[:20]:
         feed.add(
             title=post.title,
