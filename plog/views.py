@@ -34,8 +34,12 @@ def feed(tag):
     if tag and not TagCloud.objects(tag=tag, count__gt=0).first():
         return abort(404)
 
+    title = 'late.am'
+    if tag:
+        title = '%s - Posts about %s' % (title, tag)
+
     feed = AtomFeed(
-        title='late.am',
+        title=title,
         feed_url=url_for('feed', _external=True),
         author={'name': 'Dan Crosta', 'email': 'dcrosta@late.am'},
         icon=url_for('static', filename='mug.png', _external=True),
