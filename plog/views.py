@@ -41,6 +41,7 @@ def feed(tag):
     feed = AtomFeed(
         title=title,
         feed_url=url_for('feed', _external=True),
+        url=url_for('index', _external=True),
         author={'name': 'Dan Crosta', 'email': 'dcrosta@late.am'},
         icon=url_for('static', filename='mug.png', _external=True),
         generator=('plog', 'https://github.com/dcrosta/plog', '0.1'),
