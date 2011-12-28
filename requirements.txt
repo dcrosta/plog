@@ -1,6 +1,5 @@
-http://www.florian-diesch.de/software/apesmit/dist/apesmit-0.01.tar.gz
 cMarkdown
-flask
+Flask
 mongoengine
 py-bcrypt
 pygments
