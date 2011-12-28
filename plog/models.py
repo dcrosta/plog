@@ -6,6 +6,7 @@ from pytz import timezone, utc
 
 from flask import request
 from gridfs import GridFS
+from jinja2 import escape
 from mongoengine import *
 
 import wtforms
@@ -188,17 +189,26 @@ class UploadsForm(wtforms.Form):
             field.file.label = ''
 
 
+class NoHTML(object):
+    """Validator that uses :func:`~jinja2.escape` to ensure that no HTML
+    is permitted in the field's value.
+    """
 
+    def __call__(self, form, field):
+        if not isinstance(field.data, (str, unicode)):
+            return
+        if escape(field.data) != field.data:
+            raise validators.ValidationError('HTML is not permitted')
 
 class CommentForm(wtforms.Form):
-    author = wtforms.TextField(label='Your Name')
+    author = wtforms.TextField(label='Your Name', validators=[validators.Required(), NoHTML()])
     email = wtforms.TextField(
         label='Email',
         validators=[validators.Required(), validators.Email()],
         description='Never displayed')
     body = wtforms.TextAreaField(
         description='No HTML, but feel free to use <a href="http://daringfireball.net/projects/markdown/">Markdown</a>',
-        validators=[validators.Required()])
+        validators=[validators.Required(), NoHTML()])
 
     def __init__(self, formdata=None, *args, **kwargs):
         super(CommentForm, self).__init__(formdata, *args, **kwargs)
