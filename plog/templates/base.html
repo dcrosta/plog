@@ -16,6 +16,11 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='plog.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{request.scheme|default('http')}}://fonts.googleapis.com/css?family=Istok+Web:700italic,400,700,400italic">
     {% endif %}
+    {% if jump_to %}
+    <script type="text/javascript">
+      window.location.hash = '{{jump_to}}';
+    </script>
+    {% endif %}
     {% block styles %}{% endblock %}
   </head>
   <body>

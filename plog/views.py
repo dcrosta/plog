@@ -207,6 +207,7 @@ def comment(slug):
             post=post,
             cloud=TagCloud.get(),
             comment_form=comment_form,
+            jump_to='comment',
         )
 
     post.update(push__comments=Comment(

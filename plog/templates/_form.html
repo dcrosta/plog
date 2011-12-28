@@ -1,3 +1,6 @@
+{%- if formid %}
+<a name="{{formid}}"></a>
+{% endif -%}
 <form {% if formid %}id="{{formid}}" {% endif %}method="post" action="{{form.action}}" {{form.enctype|safe}}>
   <table class="form">
     <tbody>
