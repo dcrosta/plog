@@ -486,5 +486,5 @@ def notfound(error):
         cloud=cloud,
     )
 
-    return errpage, error.code
+    return errpage, getattr(error, 'code', 500)
 
