@@ -106,16 +106,17 @@ def check_csrf():
 @app.after_request
 def set_csrf(response):
     if hasattr(g, 'csrf'):
-        lifetime = timedelta(days=3650)
-        response.set_cookie(
-            'csrf',
-            g.csrf,
-            max_age=lifetime.seconds + lifetime.days * 24 * 3600,
-            expires= datetime.utcnow() + lifetime,
-            secure=False,
-            httponly=True,
-            domain=app.config.get('SESSION_COOKIE_DOMAIN', None),
-            path=app.config.get('SESSION_COOKIE_PATH', '/'),
-        )
+        if response.mimetype in ('text/html', ):
+            lifetime = timedelta(days=3650)
+            response.set_cookie(
+                'csrf',
+                g.csrf,
+                max_age=lifetime.seconds + lifetime.days * 24 * 3600,
+                expires= datetime.utcnow() + lifetime,
+                secure=False,
+                httponly=True,
+                domain=app.config.get('SESSION_COOKIE_DOMAIN', None),
+                path=app.config.get('SESSION_COOKIE_PATH', '/'),
+            )
     return response
 
