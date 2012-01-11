@@ -43,7 +43,8 @@ class TagCloud(Document):
         range = max(most - least, 1)
         scale = float(min(range, sizes))
         for t in tags:
-            t.bucket = sizes -  int(round(scale * (t.count - least) / range))
+            t.bucket = sizes - int(round(scale * (t.count - least) / range))
+            t.bucket = max(1, min(t.bucket, sizes))
 
         return tags
 
