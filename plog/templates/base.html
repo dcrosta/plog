@@ -6,14 +6,14 @@
     <meta name="keywords" content="{{keywords|join(',')}}"/>
     {% endif %}
     {{config.get('META_TAGS', '')|safe}}
-    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}"/>
+    <link rel="shortcut icon" href="{{staticurl('favicon.ico')}}"/>
     <link rel="alternate" type="application/atom+xml" href="{{url_for('feed')}}" />
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='reset.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{staticurl('reset.css')}}"/>
     {% if is_mobile %}
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='plog-mobile.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{staticurl('plog-mobile.css')}}"/>
     <meta name="viewport" content="width=500" />
     {% else %}
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='plog.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{staticurl('plog.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{request.scheme|default('http')}}://fonts.googleapis.com/css?family=Istok+Web:700italic,400,700,400italic">
     {% endif %}
     {% if jump_to %}
@@ -29,7 +29,7 @@
 
     <div id="wrapper">
       <header id="header">
-        {% block header %}<h1><a href="/" title="Home" rel="prefetch">late<img src="{{url_for('static', filename='mug.png')}}" width="16" height="16"/>am</a></h1>{% endblock %}
+        {% block header %}<h1><a href="/" title="Home" rel="prefetch">late<img src="{{staticurl('mug.png')}}" width="16" height="16"/>am</a></h1>{% endblock %}
       </header>
 
       <section id="main">
@@ -102,7 +102,7 @@
       {% endif %}
     </footer>
 
-    <script type="text/javascript" src="{{url_for('static', filename='jquery-1.6.3.min.js')}}"></script>
+    <script type="text/javascript" src="{{staticurl('jquery-1.6.3.min.js')}}"></script>
     <script type="text/javascript">
       $(document).ready(function() {
         $("#wrapper-1,#wrapper-2").css("height",$("#wrapper").innerHeight());

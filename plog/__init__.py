@@ -15,6 +15,21 @@ class SessionFlask(SessionMixin, Flask):
 
 app = SessionFlask('plog')
 
+app.config['DEPLOYSTAMP'] = '1234'
+
+# set the deploy stamp from git hash
+try:
+    lookat = here
+    while lookat != '/':
+        if exists(join(lookat, '.git')):
+            HEAD = file(join(lookat, '.git', 'HEAD')).read().strip()
+            HEAD = HEAD[5:]
+            ref = file(join(lookat, '.git', HEAD)).read().strip()
+            app.config['DEPLOYSTAMP'] = ref[:6]
+        lookat = dirname(lookat)
+except:
+    pass
+
 config = join(parent, 'plog.cfg')
 if exists(config):
     app.config.from_pyfile(config)

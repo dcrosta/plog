@@ -12,7 +12,7 @@
 {% set message = ' '.join(words) %}
 
 {% block title %}{{message}} &laquo; {{super()}}{% endblock %}
-{% block header %}<h1><a href="/" title="Home" rel="prefetch">{{words[0]|lower}}<img src="{{url_for('static', filename='mug.png')}}" width="16" height="16"/>{{words[1]|lower}}</a></h1>{% endblock %}
+{% block header %}<h1><a href="/" title="Home" rel="prefetch">{{words[0]|lower}}<img src="{{staticurl('mug.png')}}" width="16" height="16"/>{{words[1]|lower}}</a></h1>{% endblock %}
 
 {% block content %}
 <article>

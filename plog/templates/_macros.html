@@ -22,7 +22,7 @@
 
       {% if post.tags %}
       <p class="tags">
-        <img src="{{url_for('static', filename='tag.png')}}" width="16" height="16" class="icon">
+        <img src="{{staticurl('tag.png')}}" width="16" height="16" class="icon">
         {% for tag in post.tags %}
         <a href="{{url_for('tag_archive', tag=tag)}}">{{tag}}</a>{% if not loop.last %},{% endif %}
         {% endfor %}

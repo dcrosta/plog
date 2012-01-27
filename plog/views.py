@@ -3,7 +3,7 @@ from pytz import timezone, utc
 import re
 import unicodedata
 
-from flask import abort, flash, make_response, redirect, render_template, request, session, url_for
+from flask import abort, current_app, flash, make_response, redirect, render_template, request, session, url_for
 from gridfs import GridFS
 from werkzeug.contrib.atom import AtomFeed
 from werkzeug.wsgi import wrap_file
@@ -43,7 +43,7 @@ def feed(tag):
         feed_url=url_for('feed', _external=True),
         url=url_for('index', _external=True),
         author={'name': 'Dan Crosta', 'email': 'dcrosta@late.am'},
-        icon=url_for('static', filename='mug.png', _external=True),
+        icon=staticurl('mug.png', _external=True),
         generator=('plog', 'https://github.com/dcrosta/plog', '0.1'),
     )
 
@@ -487,4 +487,34 @@ def notfound(error):
     )
 
     return errpage, getattr(error, 'code', 500)
+
+@app.route('/static/<ds>/<path:filename>')
+def _static(ds, filename):
+    return current_app.send_static_file(filename=filename)
+
+
+def staticurl(filename, **kwargs):
+    stamp = current_app.config['DEPLOYSTAMP']
+    return url_for('_static', ds=stamp, filename=filename, **kwargs)
+
+@app.context_processor
+def add_staticurl():
+    return {'staticurl': staticurl}
+
+@app.after_request
+def set_cache_control(response):
+    if not request.path.startswith('/admin'):
+        response.cache_control.public = True
+
+    if response.mimetype == 'text/html':
+        response.cache_control.no_cache = True
+        response.cache_control.no_store = True
+        response.cache_control.max_age = 0
+        response.cache_control.s_maxage = 0
+
+    elif request.endpoint == '_static':
+        response.cache_control.max_age = 315360000
+        response.cache_control.s_maxage = 315360000
+
+    return response
 
