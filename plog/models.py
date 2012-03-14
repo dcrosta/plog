@@ -1,12 +1,12 @@
 __all__ = ('Comment', 'Commenter', 'CommentForm', 'Post', 'PostForm', 'TagCloud', 'UploadsForm')
 
 from datetime import datetime
+from HTMLParser import HTMLParser
 import re
 from pytz import timezone, utc
 
 from flask import request
 from gridfs import GridFS
-from jinja2 import escape
 from mongoengine import *
 
 import wtforms
@@ -195,10 +195,24 @@ class NoHTML(object):
     is permitted in the field's value.
     """
 
+    class HTMLChecker(HTMLParser):
+        def __init__(self):
+            HTMLParser.__init__(self)
+            self.passed = True
+        def handle_starttag(self, tags, attrs):
+            self.passed = False
+        def handle_endtag(self, tags):
+            self.passed = False
+        @classmethod
+        def check(cls, html_string):
+            h = cls()
+            h.feed(html_string)
+            return h.passed
+
     def __call__(self, form, field):
         if not isinstance(field.data, (str, unicode)):
             return
-        if escape(field.data) != field.data:
+        if not self.HTMLChecker.check(unicode(field.data)):
             raise validators.ValidationError('HTML is not permitted')
 
 class CommentForm(wtforms.Form):
