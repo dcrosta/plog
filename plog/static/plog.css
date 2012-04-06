@@ -671,3 +671,7 @@ table.dashboard {
   table.dashboard .noborder td:last-child {
     text-align: right;
     padding-right: 5px; }
+  table.dashboard textarea {
+    width: 99%;
+    height: 200px;
+    font-family: monospace; }

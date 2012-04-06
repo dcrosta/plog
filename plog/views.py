@@ -396,6 +396,8 @@ def delete_post(slug):
 def moderate(slug, index):
     post = get_or_404(Post, slug=slug)
     if 'approve' in request.form:
+        # update comment body with updated version from dashboard
+        post.comments[index].body = request.form['body']
         post.comments[index].approved = True
     else:
         del post.comments[index]

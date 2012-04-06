@@ -59,31 +59,29 @@
       </thead>
       <tbody>
         {% for comment in comments %}
-        <tr>
-          <td><a href="{{url_for('edit_post', slug=comment.post.slug)}}">{{comment.post.title}}</a></td>
-          <td>{{comment.author}}</td>
-          <td>{{comment.email}}</td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <code>{{comment.body|escape}}</code>
-          </td>
-        </tr>
-        <tr class="noborder">
-          <td>
-            <form class="moderate" action="{{url_for('moderate', slug=comment.post.slug, index=comment.index)}}" method="post">
-              <input type="hidden" name="csrf" value="{{g.csrf}}"/>
+        <form class="moderate" action="{{url_for('moderate', slug=comment.post.slug, index=comment.index)}}" method="post">
+          <input type="hidden" name="csrf" value="{{g.csrf}}"/>
+          <tr>
+            <td><a href="{{url_for('edit_post', slug=comment.post.slug)}}">{{comment.post.title}}</a></td>
+            <td>{{comment.author}}</td>
+            <td>{{comment.email}}</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              {# comments shouldn't get this far if they contain HTML, so this *should* be ok to do #}
+              <textarea name="body">{{comment.body|safe}}</textarea>
+            </td>
+          </tr>
+          <tr class="noborder">
+            <td>
               <input type="submit" name="approve" value="Approve"/>
-            </form>
-          </td>
-          <td></td>
-          <td>
-            <form class="moderate" action="{{url_for('moderate', slug=comment.post.slug, index=comment.index)}}" method="post">
-              <input type="hidden" name="csrf" value="{{g.csrf}}"/>
+            </td>
+            <td></td>
+            <td>
               <input type="submit" name="reject" value="Reject"/>
-            </form>
-          </td>
-        </tr>
+            </td>
+          </tr>
+        </form>
         {% else %}
         <tr>
           <td colspan="3"><em>No unmoderated comments</em></td>
