@@ -1,6 +1,6 @@
 cMarkdown
 Flask
-mongoengine < 0.6
+mongoengine >= 0.6
 py-bcrypt
 pygments
 pytz

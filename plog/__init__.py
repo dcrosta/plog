@@ -38,7 +38,10 @@ private = join(parent, 'private.plog.cfg')
 if exists(private):
     app.config.from_pyfile(private)
 
-db = connect(**app.config.get('MONGODB_CONFIG', {'db': 'plog'}))
+mongo_config = app.config.get('MONGODB_CONFIG', {'db': 'plog'})
+db_name = mongo_config['db']
+conn = connect(**mongo_config)
+db = conn[db_name]
 app.session_store = MongoSessionStore(db)
 
 import plog.filters
