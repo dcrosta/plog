@@ -24,7 +24,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='plog',
-    version='0.2',
+    version='0.3',
     url='https://github.com/dcrosta/plog',
     license='BSD',
     author='Dan Crosta',
