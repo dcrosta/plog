@@ -2,6 +2,7 @@ __all__ = ('app', 'app_factory')
 
 from datetime import datetime, timedelta
 from os.path import abspath, dirname, exists, join
+from subprocess import check_output
 
 from flask import Flask
 from plog.session import SessionMixin, MongoSessionStore
@@ -15,20 +16,11 @@ class SessionFlask(SessionMixin, Flask):
 
 app = SessionFlask('plog')
 
-app.config['DEPLOYSTAMP'] = '1234'
-
-# set the deploy stamp from git hash
 try:
-    lookat = here
-    while lookat != '/':
-        if exists(join(lookat, '.git')):
-            HEAD = file(join(lookat, '.git', 'HEAD')).read().strip()
-            HEAD = HEAD[5:]
-            ref = file(join(lookat, '.git', HEAD)).read().strip()
-            app.config['DEPLOYSTAMP'] = ref[:6]
-        lookat = dirname(lookat)
+    git_hash = check_output(['git', 'rev-parse', 'HEAD'], cwd=parent)
+    app.config['DEPLOYSTAMP'] = git_hash[:6]
 except:
-    pass
+    app.config['DEPLOYSTAMP'] = '1234'
 
 config = join(parent, 'plog.cfg')
 if exists(config):
