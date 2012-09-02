@@ -30,6 +30,9 @@ private = join(parent, 'private.plog.cfg')
 if exists(private):
     app.config.from_pyfile(private)
 
+if app.config.get('MEDIA_URL_ROOT', '').endswith('/'):
+    app.config['MEDIA_URL_ROOT'] = app.config['MEDIA_URL_ROOT'].rstrip('/')
+
 mongo_config = app.config.get('MONGODB_CONFIG', {'db': 'plog'})
 db_name = mongo_config['db']
 conn = connect(**mongo_config)

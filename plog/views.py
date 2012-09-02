@@ -497,7 +497,10 @@ def _static(ds, filename):
 
 def staticurl(filename, **kwargs):
     stamp = current_app.config['DEPLOYSTAMP']
-    return url_for('_static', ds=stamp, filename=filename, **kwargs)
+    url = url_for('_static', ds=stamp, filename=filename, **kwargs)
+    if 'MEDIA_URL_ROOT' in app.config:
+        url = re.sub(r'^/static', app.config['MEDIA_URL_ROOT'], url)
+    return url
 
 @app.context_processor
 def add_staticurl():
