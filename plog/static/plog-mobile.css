@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   width: 500px;
   margin: 0 auto;
@@ -70,10 +71,13 @@ img.icon {
   margin-top: 25px; }
   #wrapper article #comments > h1 {
     font-size: 1.15em; }
+  #wrapper article #comments > h2 {
+    font-size: 1em;
+    font-style: italic; }
   #wrapper article #comments .comment {
     padding: 0px 10px 10px 10px;
     margin-bottom: 10px;
-    border: 1px solid #E5E5E5;
+    border: 1px solid #e5e5e5;
     border-bottom: none; }
     #wrapper article #comments .comment .by {
       font-size: 85%;
@@ -81,10 +85,10 @@ img.icon {
       font-style: italic;
       padding-left: 10px; }
   #wrapper article #comments .comment.first {
-    border-top: 1px solid #E5E5E5; }
+    border-top: 1px solid #e5e5e5; }
 #wrapper article p.more {
   padding-bottom: 15px;
-  border-bottom: 1px dotted #aaa;
+  border-bottom: 1px dotted #aaaaaa;
   margin-bottom: 15px; }
 #wrapper article code {
   font-size: 85%; }
@@ -157,7 +161,7 @@ img.icon {
       color: #60a0b0;
       font-style: italic; }
     #wrapper article pre code .err {
-      border: 1px solid #FF0000; }
+      border: 1px solid red; }
     #wrapper article pre code .k {
       color: #007020;
       font-weight: bold; }
@@ -175,18 +179,18 @@ img.icon {
       color: #60a0b0;
       background-color: #fff0f0; }
     #wrapper article pre code .gd {
-      color: #A00000; }
+      color: #a00000; }
     #wrapper article pre code .ge {
       font-style: italic; }
     #wrapper article pre code .gr {
-      color: #FF0000; }
+      color: red; }
     #wrapper article pre code .gh {
       color: #000080;
       font-weight: bold; }
     #wrapper article pre code .gi {
-      color: #00A000; }
+      color: #00a000; }
     #wrapper article pre code .go {
-      color: #808080; }
+      color: gray; }
     #wrapper article pre code .gp {
       color: #c65d09;
       font-weight: bold; }
@@ -196,7 +200,7 @@ img.icon {
       color: #800080;
       font-weight: bold; }
     #wrapper article pre code .gt {
-      color: #0040D0; }
+      color: #0040d0; }
     #wrapper article pre code .kc {
       color: #007020;
       font-weight: bold; }
@@ -330,14 +334,14 @@ table.form {
     padding: 6px 4px;
     margin: 0;
     background: none;
-    border: 1px inset #EEE7E0;
+    border: 1px inset #eee7e0;
     width: 97%;
     margin: 0 5px 0 0; }
   table.form input[type="submit"] {
     padding: 4px 18px;
     margin: 0;
     background: none;
-    border: 1px solid #EEE7E0; }
+    border: 1px solid #eee7e0; }
   table.form textarea {
     height: 150px; }
 

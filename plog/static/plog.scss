@@ -290,8 +290,16 @@ img.icon {
     #comments {
       border-top:1px dotted #E5E5E5;
 
+      > #disqus_thread {
+        margin-top:1em;
+      }
+
       > h1 {
         @include header(0.85);
+        font-style:italic;
+      }
+      > h2 {
+        @include header(0.65);
         font-style:italic;
       }
       .comment {

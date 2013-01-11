@@ -1,3 +1,4 @@
+@charset "UTF-8";
 header, hgroup, aside, section, article, time, nav, footer, dialog, figure, figcaption {
   display: block; }
 
@@ -67,7 +68,7 @@ h1 a:hover, h1 a:focus, h2 a:hover, h2 a:focus, h3 a:hover, h3 a:focus, h4 a:hov
   text-decoration: underline; }
 
 pre {
-  border: 1px solid #DDD;
+  border: 1px solid #dddddd;
   background-color: #FFF;
   padding: 8px 14px; }
 
@@ -136,9 +137,9 @@ img.icon {
 
 #header {
   text-align: center;
-  border-bottom: 1px solid #EEE;
+  border-bottom: 1px solid #eeeeee;
   padding-bottom: 30px;
-  text-shadow: 0 1px 0 #FFF; }
+  text-shadow: 0 1px 0 white; }
   #header h1 {
     font-weight: normal;
     font-size: 80px;
@@ -183,7 +184,7 @@ img.icon {
   #sidebar .boxed {
     margin-top: 41px;
     padding: 8px 8px 12px;
-    border: 1px solid #DED9D4; }
+    border: 1px solid #ded9d4; }
   #sidebar #search {
     padding: 8px;
     margin-top: 0;
@@ -198,12 +199,12 @@ img.icon {
       border: none;
       background: none; }
     #sidebar #search #search-input {
-      border: 1px inset #EEE7E0;
+      border: 1px inset #eee7e0;
       width: 152px;
       margin: 0 5px 0 0;
       -webkit-transition: all 0.1s linear; }
     #sidebar #search #search-button {
-      border: 1px solid #EEE7E0;
+      border: 1px solid #eee7e0;
       width: 75px; }
   #sidebar #tagcloud h1 {
     font-family: "Istok Web", sans-serif;
@@ -267,7 +268,7 @@ img.icon {
   padding: 30px 0 40px;
   width: 590px;
   padding-right: 17px;
-  border-right: 1px solid #EEE; }
+  border-right: 1px solid #eeeeee; }
   #main ul.messages {
     margin: 0px;
     padding: 0px; }
@@ -276,7 +277,7 @@ img.icon {
       margin-left: 0px;
       margin-bottom: 8px;
       padding: 6px 6px 4px 30px;
-      border: 1px solid #333; }
+      border: 1px solid #333333; }
     #main ul.messages li.success {
       background: url("li_success.png") 8px 8px no-repeat;
       background-color: #cfc; }
@@ -295,7 +296,7 @@ img.icon {
 
 #articles article {
   padding-bottom: 10px;
-  border-bottom: 1px dotted #E5E5E5;
+  border-bottom: 1px dotted #e5e5e5;
   margin-bottom: 20px; }
   #articles article header {
     color: #989592;
@@ -313,9 +314,11 @@ img.icon {
     max-width: 85%;
     background: white;
     padding: 10px;
-    border: 1px solid #999; }
+    border: 1px solid #999999; }
   #articles article #comments {
-    border-top: 1px dotted #E5E5E5; }
+    border-top: 1px dotted #e5e5e5; }
+    #articles article #comments > #disqus_thread {
+      margin-top: 1em; }
     #articles article #comments > h1 {
       font-family: "Istok Web", sans-serif;
       font-weight: normal;
@@ -323,9 +326,16 @@ img.icon {
       line-height: 25.5px;
       margin: 17px 0px 10.2px 0px;
       font-style: italic; }
+    #articles article #comments > h2 {
+      font-family: "Istok Web", sans-serif;
+      font-weight: normal;
+      font-size: 16.9px;
+      line-height: 19.5px;
+      margin: 13px 0px 7.8px 0px;
+      font-style: italic; }
     #articles article #comments .comment {
       padding: 10px;
-      border: 1px solid #E5E5E5;
+      border: 1px solid #e5e5e5;
       border-bottom: none; }
       #articles article #comments .comment .by {
         font-size: 85%;
@@ -333,13 +343,13 @@ img.icon {
         font-style: italic;
         padding-left: 10px; }
     #articles article #comments .comment.first {
-      border-top: 1px solid #E5E5E5; }
+      border-top: 1px solid #e5e5e5; }
   #articles article .tags .untagged {
     color: #777; }
   #articles article blockquote {
     font-style: italic;
     margin-bottom: 15px;
-    border-left: 2px solid #ccc;
+    border-left: 2px solid #cccccc;
     padding-left: 20px; }
     #articles article blockquote table, #articles article blockquote pre, #articles article blockquote blockquote, #articles article blockquote ul, #articles article blockquote ol, #articles article blockquote p {
       margin-bottom: 10px; }
@@ -412,7 +422,7 @@ img.icon {
       color: #60a0b0;
       font-style: italic; }
     #articles article pre code .err {
-      border: 1px solid #FF0000; }
+      border: 1px solid red; }
     #articles article pre code .k {
       color: #007020;
       font-weight: bold; }
@@ -430,18 +440,18 @@ img.icon {
       color: #60a0b0;
       background-color: #fff0f0; }
     #articles article pre code .gd {
-      color: #A00000; }
+      color: #a00000; }
     #articles article pre code .ge {
       font-style: italic; }
     #articles article pre code .gr {
-      color: #FF0000; }
+      color: red; }
     #articles article pre code .gh {
       color: #000080;
       font-weight: bold; }
     #articles article pre code .gi {
-      color: #00A000; }
+      color: #00a000; }
     #articles article pre code .go {
-      color: #808080; }
+      color: gray; }
     #articles article pre code .gp {
       color: #c65d09;
       font-weight: bold; }
@@ -451,7 +461,7 @@ img.icon {
       color: #800080;
       font-weight: bold; }
     #articles article pre code .gt {
-      color: #0040D0; }
+      color: #0040d0; }
     #articles article pre code .kc {
       color: #007020;
       font-weight: bold; }
@@ -551,7 +561,7 @@ img.icon {
     #articles article pre code .il {
       color: #40a070; }
 #articles #preview article {
-  border: 2px dashed #999;
+  border: 2px dashed #999999;
   background: #F3F2E0;
   padding: 0px 10px;
   margin-bottom: 40px; }
@@ -616,7 +626,7 @@ table.form {
     padding: 6px 4px;
     margin: 0;
     background: none;
-    border: 1px inset #EEE7E0;
+    border: 1px inset #eee7e0;
     width: 450px;
     margin: 0 5px 0 0; }
   table.form input[type="submit"] {
@@ -624,7 +634,7 @@ table.form {
     padding: 4px 18px;
     margin: 0;
     background: none;
-    border: 1px solid #EEE7E0; }
+    border: 1px solid #eee7e0; }
   table.form input[type="checkbox"] {
     position: relative;
     top: 4px; }
@@ -651,11 +661,11 @@ table.form {
     width: 12.75em !important; }
 
 table.dashboard {
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   border-collapse: collapse;
   width: 100%; }
   table.dashboard th, table.dashboard td {
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc;
     border-collapse: collapse;
     padding: 2px 5px; }
   table.dashboard th {

@@ -6,8 +6,4 @@
 
 {% block content %}
     {{macros.article(post)}}
-
-    {% with form=comment_form, submitlabel="Say It!", formid="comment" %}
-    {% include "_form.html" with context %}
-    {% endwith %}
 {% endblock %}
