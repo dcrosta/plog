@@ -49,6 +49,7 @@
         <script type="text/javascript">
           var disqus_shortname = 'lateam';
           var disqus_url = '{{url_for("post", slug=post.slug, _external=True)}}';
+          var disqus_identifier = '{{post.slug}}';
           (function() {
               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
               dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
